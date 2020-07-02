@@ -334,7 +334,6 @@ ul {
 .button-alert {
   align-items: center;
   background-color: rgba(158,98,0, .8);
-  /* background: linear-gradient(180deg, rgba(158,98,0, .8) 0%, rgba(50,30,62, .8) 25%, rgba(50,30,62, .8) 50%, rgba(50,30,62, .8) 75%, rgba(0,77,79, .8) 100%); */
   display: none;
   height: 100%;
   justify-content: center;
@@ -346,8 +345,10 @@ ul {
 }
 
 .button-alert p {
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-bottom: 16.5vh;
+  max-width: 75vw;
+  text-align: center;
 }
 
 @media (min-width: 500px) {
@@ -361,6 +362,10 @@ ul {
 
   .slider-container h2 {
     text-align: center;
+  }
+
+  .button-alert p {
+    font-size: 2rem;
   }
 }
 

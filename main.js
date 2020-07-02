@@ -306,6 +306,7 @@ document.addEventListener("DOMContentLoaded", function() {
       contactH2 = document.querySelector(".contact-container h2"),
       contactP = document.querySelector(".contact-container p"),
       buttonAlert = document.querySelector(".button-alert");
+      
   contactButton.addEventListener("click", function() {
     let emailEl = document.querySelector(".email-el");
     emailEl.select()
