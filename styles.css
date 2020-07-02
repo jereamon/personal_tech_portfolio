@@ -1,0 +1,401 @@
+:root {
+  --main-grey: #333;
+  --main-white: #eee;
+  --secondary-white: #ccc;
+  --main-purple: #321E3E;
+  /* --main-orange: #6A4400; */
+  /* --main-blue: #004D4F; */
+  /* --main-purple: #7c4999;
+  --main-orange: #865400;
+  --main-blue: #00767c; */
+  /* --main-purple: rgb(144, 86, 179); */
+  --main-orange: #9E6200;
+  --main-blue: #00888C;
+  --serif-font: "Merriweather", "Times New Roman", Georgia, serif;
+  --sans-font: 'Lato', Arial, Helvetica, sans-serif;
+  --text-shadow: 2px 2px 3px rgba(51, 51, 51, 0.7);
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('./Fonts/Lato/Lato-Regular.ttf') format("truetype");
+}
+
+@font-face {
+  font-family: "Merriweather";
+  src: url("./Fonts/Merriweather/Merriweather-Regular.ttf") format("truetype");
+}
+
+* {
+  box-sizing: border-box;
+  color: var(--main-white);
+  font-family: var(--sans-font);
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+  z-index: 5;
+}
+
+body {
+  background-color: var(--main-grey);
+  /* background-color: white; */
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  -webkit-overflow-scrolling: none;
+}
+
+svg {
+  stroke: var(--main-white);
+  max-height: 33vh;
+  max-width: 66vw;
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: normal;
+  text-shadow: var(--text-shadow);
+}
+
+header {
+  align-items: center;
+  background-image: url("header-background-phone-3.jpg");
+  background-position: right;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: flex-start;
+  position: relative;
+  text-shadow: var(--text-shadow);
+  width: 100%;
+}
+
+header::before {
+  content: "";
+  background: linear-gradient(180deg, rgba(50,30,62,.6) 80%, rgba(51,51,51,1) 100%);
+  /* background: linear-gradient(180deg, rgba(0, 77, 79, .5) 80%, rgba(51,51,51,1) 100%); */
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+header::after {
+  content: ""
+}
+
+header h1, header h2, header h3 {
+  z-index: 1;
+}
+
+header h1 {
+  font-size: 3em;
+  margin-top: 25vh;
+}
+
+header h2 {
+  font-family: var(--serif-font);
+  font-size: 1.1em;
+  max-width: 82.5vw;
+  padding: 2.5vh;
+  text-align: center;
+}
+
+header h3 {
+  position: absolute;
+  bottom: 0;
+}
+
+ul {
+  list-style-type: none;
+}
+
+#header-down-arrow {
+  bottom: 3.25vh;
+  position: absolute;
+  width: 50px;
+  z-index: 1;
+}
+
+.info-container {
+  align-items: center;
+  background-image: url("porters-phone.jpg");
+  justify-content: space-around;
+}
+
+.info-container h3 {
+  /* font-size: 2em;
+  text-align: center; */
+  text-align: left;
+  font-weight: bold;
+}
+
+.info-container ul {
+  /* align-items: center; */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  max-width: 500px;
+  z-index: 4;
+}
+
+.info-container li {
+  font-family: var(--serif-font);
+  text-align: center;
+  /* font-size: 1em; */
+}
+
+.info-text-li {
+  letter-spacing: 2px;
+  padding-bottom: 16.5vh;
+}
+
+.big-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-shadow: var(--text-shadow);
+}
+
+.info-container ul .tech-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding-top: 10px;
+}
+
+.info-container ul .tech-list li {
+  text-align: center;
+  width: 33%;
+}
+
+.slider-container, .info-container, .contact-container {
+  background-size: cover;
+  background-position: center;
+  /* background-color: var(--main-purple); */
+  /* background: linear-gradient(180deg, rgba(51,51,51,1) 0%, rgba(50,30,62,1) 15%, rgba(50,30,62,1) 90%, rgba(0,77,79,1) 100%); */
+  /* background: linear-gradient(180deg, rgba(51,51,51,1) 0%, rgba(50,30,62,1) 15%); */
+  /* background: linear-gradient(180deg, rgba(51,51,51,1) 0%, rgba(50,30,62,1) 15%); */
+  display: none;
+  flex-direction: column;
+  height: 100vh;
+  position: absolute;
+  padding: 6.5vh 6.5vw;
+  top: 100vh;
+  width: 100%;
+}
+
+.slider-container {
+  background-image: url("flowers-phone.jpg");
+  justify-content: center;
+  z-index: 5;
+}
+
+.slider-container::after, .info-container::after, .contact-container::after {
+  /* background: linear-gradient(180deg, rgba(51, 51, 51, 1) 0%, rgba(51, 51, 51, .8) 10%); */
+  background: linear-gradient(180deg, rgba(51, 51, 51, 1) 0%, rgba(50, 30, 62, .7) 10%);
+  /* background: #333333cc; */
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 3;
+}
+
+.slider-container h2 {
+  color: var(--secondary-white);
+  font-family: var(--serif-font);
+  font-size: 1.25rem;
+  font-weight: normal;
+  max-width: 500px;
+}
+
+.slider-text-change {
+  /* color: var(--main-purple); */
+  font-family: var(--sans-font);
+  font-size: 2rem;
+}
+
+.anim-container {
+  align-items: center;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  overflow: hidden;
+  width: 100%
+}
+
+#responsive-icon {
+  stroke: var(--main-white);
+}
+
+.responsive-anim {
+  display: none;
+  opacity: 0;
+}
+
+#BG, #Layer_2 {
+  height: 100%;
+  width: 100%;
+}
+
+.camera {
+  fill: var(--main-white);
+}
+
+.cls-1,
+.cls-2 {
+  fill: none;
+  stroke-linecap: round;
+  stroke-miterlimit: 10;
+  stroke-width: 15px;
+}
+
+.cls-3,
+.cls-4,
+.cls-5 {
+  fill: none;
+  /* stroke-miterlimit: 15; */
+}
+.cls-3,
+.cls-4 {
+  stroke-width: 12px;
+}
+.cls-4 {
+  stroke-linecap: round;
+}
+.cls-5 {
+  stroke-width: 7.5px;
+}
+
+.palette-rect-1 {
+  fill: var(--main-purple);
+}
+
+.palette-rect-2 {
+  fill: var(--main-blue);
+}
+
+.palette-rect-3 {
+  fill: var(--main-orange);
+}
+
+.slider-header {
+  align-self: flex-end;
+  color: var(--secondary-white);
+  font-family: var(--serif-font);
+  text-align: end;
+  width: 66%;
+}
+
+.contact-container {
+  align-items: center;
+  background-image: url("snow-hike-phone.jpg");
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  top: 100vh;
+}
+
+.contact-container h2 {
+  font-size: 2rem;
+}
+
+.contact-container p {
+  text-shadow: var(--text-shadow);
+}
+
+.contact-container button {
+  background-color: var(--main-blue);
+  border: solid 2.5px var(--main-orange);
+  border-radius: 5px;
+  color: var(--main-white);
+  /* padding: 3.125vh 16.5vh; */
+  margin: 5vh 0;
+  padding: 12px 23px;
+  /* width: 50vw; */
+  transition: 400ms;
+}
+
+.contact-container button:hover {
+  background-color: var(--main-orange);
+  border: solid 2.5px var(--main-blue);
+  cursor: pointer;
+}
+
+.button-alert {
+  align-items: center;
+  background-color: rgba(158,98,0, .8);
+  /* background: linear-gradient(180deg, rgba(158,98,0, .8) 0%, rgba(50,30,62, .8) 25%, rgba(50,30,62, .8) 50%, rgba(50,30,62, .8) 75%, rgba(0,77,79, .8) 100%); */
+  display: none;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.button-alert p {
+  font-size: 2rem;
+  margin-bottom: 16.5vh;
+}
+
+@media (min-width: 500px) {
+  header {
+    background-image: url("header-background-tablet.jpg");
+  }
+  header h2 {
+    letter-spacing: 1px;
+    max-width: 400px;
+  }
+
+  .slider-container h2 {
+    text-align: center;
+  }
+}
+
+@media (min-width: 1000px) {
+  header {
+    background-image: url("header-background.jpg");
+    background-position: center;
+  }
+
+  header h1 {
+    font-size: 4rem;
+    margin-top: 33vh;
+  }
+
+  header h2 {
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    max-width: 600px;
+  }
+
+  .info-container {
+    background-image: url("porters.jpg");
+  }
+
+  .slider-container {
+    background-image: url("flowers.jpg");
+  }
+
+  .slider-container h2 {
+    align-self: center;
+    text-align: left;
+    width: 500px;
+  }
+
+  .contact-container {
+    background-image: url("snow-hike.jpg");
+  }
+}

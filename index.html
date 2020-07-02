@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generic Icon Animation</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.3/gsap.min.js"></script>
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Hi, I'm Jeremy</h1>
+      <h2>I build custom websites to fit any project's requirements</h2>
+      <svg id="header-down-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+        <defs>
+          <style>
+            .a {
+              fill: none;
+              stroke: #eee;
+              stroke-linecap: round;
+              stroke-miterlimit: 10;
+              stroke-width: 15px;
+            }
+          </style>
+        </defs>
+        <title>down-arrow</title>
+        <g>
+          <line class="a" x1="499.95" y1="559.63" x2="974.66" y2="262.95"/>
+          <line class="a" x1="499.95" y1="559.63" x2="25.25" y2="262.95"/>
+          <line class="a" x1="499.95" y1="737.65" x2="974.66" y2="440.96"/>
+          <line class="a" x1="499.95" y1="737.65" x2="25.25" y2="440.96"/>
+          <line class="a" x1="975.25" y1="440.37" x2="975.25" y2="262.35"/>
+          <line class="a" x1="25.84" y1="440.37" x2="25.84" y2="262.35"/>
+        </g>
+      </svg>
+    </header>
+
+    <section class="info-container info-container-1">
+      <ul>
+        <li class="info-text-li">
+          <span class="big-text">Frontend development</span> is my forte but I'm comfortable
+          with <span class="big-text">backend development</span> and <span class="big-text">graphic design</span> as well.
+        </li>
+        <!-- <li>
+          <h3>Technologies I'm familiar with&nbspinclude:</h3>
+          <ul class="tech-list">
+            <li>Django</li>
+            <li>Flask</li>
+            <li>Wordpress</li>
+            <li>HTML5</li>
+            <li>CSS3</li>
+            <li>Javascript</li>
+            <li>Python</li>
+          </ul>
+        </li> -->
+      </ul>
+    </section>
+
+    <section class="slider-container">
+      <h2>Sites I build &nbsp<span class="slider-text-change">include:</span></h2>
+      
+      <div class="anim-container generic-anim">
+        <svg id="generic-icon"
+          data-name="Location Icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1000 1000"
+        >
+          <defs></defs>
+          <title>generic-icons</title>
+          <path class="cls-1 loc-top" d="M700.65,389.68h0a187.17,187.17,0,0,0,5.23-44C705.88,237.59,613.71,150,500,150S294.12,237.59,294.12,345.65a187.17,187.17,0,0,0,5.23,44h0"/>
+          <polyline class="cls-2 loc-line-1" points="700.65 389.67 700.65 389.68 674.69 449.23 674.67 449.27 500 850"/>
+          <polyline class="cls-2 loc-line-2" points="299.35 389.67 299.35 389.68 325.31 449.23 325.33 449.27 500 850"/>
+          <ellipse class="cls-1 loc-circle" cx="500" cy="355.43" rx="128.68" ry="122.28"/>
+  
+          <line
+            class="cls-1 cls-2 burg-line-1"
+            opacity="0"
+            x1="200"
+            y1="300"
+            x2="800"
+            y2="300"
+          />
+          <line
+            class="cls-1 cls-2 burg-line-2"
+            opacity="0"
+            x1="200"
+            y1="500"
+            x2="800"
+            y2="500"
+          />
+          <line
+            class="cls-1 cls-2 burg-line-3"
+            opacity="0"
+            x1="200"
+            y1="700"
+            x2="800"
+            y2="700"
+          />
+  
+          <rect
+            class="cls-1 mail-outer"
+            opacity="0"
+            x="100"
+            y="225"
+            width="800"
+            height="550"
+            rx="39.61"
+          />
+  
+          <line
+            class="cls-2 mail-final-line"
+            opacity="0"
+            x1="404.44"
+            y1="500"
+            x2="153.29"
+            y2="645"
+          />
+        </svg>
+
+        <h3 class="slider-header generic-anim-header">Simple animations for a polished&nbspappearance</h3>
+      </div>
+  
+      <div class="anim-container responsive-anim">
+        <svg id="responsive-icon"
+          data-name="Layer 1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1000 1000"
+        >
+          <defs></defs>
+          <title>phone-tablet-pc-start</title>
+          <rect class="cls-3 phone-outer" x="322.73" y="175" width="354.55" height="650" rx="51.13"/>
+          <rect class="cls-3 phone-screen" x="348.25" y="223.39" width="303.49" height="541.67" rx="6.99"/>
+          <line class="cls-4 phone-speaker" x1="472.35" y1="198.83" x2="529.07" y2="198.83"/>
+          <circle class="camera" cx="425" cy="197.75" r="5" />
+          <rect class="cls-5 home-button" x="464.55" y="791.78" width="70.91" height="14.44" rx="1.6"/>
+
+          <path class="cls-4 pc-stand" opacity="0" d="M434.37,728.66s-42.64,136-143,146.09"/>
+          <path class="cls-4 pc-stand" opacity="0" d="M555.08,728.66s42.64,136,143,146.09"/>
+          <line class="cls-4 pc-stand" opacity="0" x1="291.64" y1="874.46" x2="697.81" y2="874.46"/>
+        </svg>
+ 
+        <h3 class="slider-header responsive-anim-header">Responsive to fit all screen&nbspsizes</h2>
+      </div>
+
+      <!-- <div class="anim-container palette-anim">
+        <svg id="palette-anim"
+          data-name="Palette Anim"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1000 1000"
+        >
+          <rect class="palette-rect palette-rect-1" x="16.5" y="125" width="311" height="750" rx="100" />
+          <rect class="palette-rect palette-rect-2" x="327.5" y="125" width="311" height="750" rx="100" />
+          <rect class="palette-rect palette-rect-3" x="638.5" y="125" width="311" height="750" rx="100" />
+        </svg>
+      </div> -->
+    </section> 
+
+    <section class="contact-container">
+      <h2>Get in touch</h2>
+      <p>Let's talk about your project's requirements</p>
+      <button>Message Me!</button>
+      <input class="email-el" type="text" value="jereamon@gmail.com" style="opacity: 0; position: absolute; top: 100vh;">
+    </section>
+
+    <div class="button-alert">
+      <p>Email Address Copied to Clipboard!</p>
+    </div>
+  </body>
+</html>
