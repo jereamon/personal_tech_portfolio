@@ -3,19 +3,18 @@
   --main-white: #eee;
   --secondary-white: #ccc;
   --main-purple: #321E3E;
-  /* --main-orange: #6A4400; */
-  /* --main-blue: #004D4F; */
-  /* --main-purple: #7c4999;
-  --main-orange: #865400;
-  --main-blue: #00767c; */
-  /* --main-purple: rgb(144, 86, 179); */
-  --main-orange: #9E6200;
-  --main-blue: #00888C;
+  /* --main-orange: #9E6200; */
+  --main-orange: #E17F5D;
+  --main-orange-low-opacity: rgba(225, 127, 93, .8);
+  /* --main-blue: #00888C; */
+  --main-blue: #4E8AB2;
   --serif-font: "Merriweather", "Times New Roman", Georgia, serif;
   --sans-font: 'Lato', Arial, Helvetica, sans-serif;
   --text-shadow: 2px 2px 3px rgba(51, 51, 51, 0.7);
 }
 
+
+/*#region Generic Stuff  */
 @font-face {
   font-family: 'Lato';
   src: url('./Fonts/Lato/Lato-Regular.ttf') format("truetype");
@@ -112,6 +111,8 @@ header h3 {
 ul {
   list-style-type: none;
 }
+/*#endregion Generic Stuff  */
+
 
 #header-down-arrow {
   bottom: 3.25vh;
@@ -120,6 +121,8 @@ ul {
   z-index: 1;
 }
 
+
+/*#region Info Section  */
 .info-container {
   align-items: center;
   background-image: url("porters-phone.jpg");
@@ -172,7 +175,9 @@ ul {
   text-align: center;
   width: 33%;
 }
+/*#endregion Info Section  */
 
+/*#region Slider section  */
 .slider-container, .info-container, .contact-container {
   background-size: cover;
   background-position: center;
@@ -294,7 +299,9 @@ ul {
   text-align: end;
   width: 66%;
 }
+/*#endregion Slider section  */
 
+/*#region Contact section  */
 .contact-container {
   align-items: center;
   background-image: url("snow-hike-phone.jpg");
@@ -333,7 +340,7 @@ ul {
 
 .button-alert {
   align-items: center;
-  background-color: rgba(158,98,0, .8);
+  background-color: var(--main-orange-low-opacity);
   display: none;
   height: 100%;
   justify-content: center;
@@ -350,7 +357,9 @@ ul {
   max-width: 75vw;
   text-align: center;
 }
+/*#endregion Contact section  */
 
+/*#region Media Queries  */
 @media (min-width: 500px) {
   header {
     background-image: url("header-background-tablet.jpg");
@@ -404,3 +413,4 @@ ul {
     background-image: url("snow-hike.jpg");
   }
 }
+/*#endregion Media Queries  */
