@@ -1,0 +1,28 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <defs>
+    <style>
+      .pause-cls-1 {
+        fill: #33333e;
+      }
+
+      .pause-cls-2 {
+        fill: #321e3e;
+      }
+
+      .pause-cls-2, .pause-cls-3 {
+        stroke: #ddd;
+        stroke-miterlimit: 10;
+        stroke-width: 5px;
+      }
+
+      .pause-cls-3 {
+        fill: none;
+        stroke-linecap: round;
+      }
+    </style>
+  </defs>
+  <rect class="pause-cls-1" width="500" height="500"/>
+  <rect class="pause-cls-2" x="50" y="50" width="400" height="400" rx="50"/>
+  <line class="pause-cls-3" x1="175" y1="100" x2="175" y2="400"/>
+  <line class="pause-cls-3" x1="325" y1="100" x2="325" y2="400"/>
+</svg>

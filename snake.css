@@ -1,0 +1,125 @@
+:root {
+    --main-grey: #333;
+    --main-white: #eee;
+    --secondary-white: #ccc;
+    --main-purple: #321E3E;
+    /* --main-orange: #9E6200; */
+    --main-orange: #E17F5D;
+    --main-orange-low-opacity: rgba(225, 127, 93, .8);
+    --main-blue: #00888C;
+    /* --main-blue: #4E8AB2; */
+    --serif-font: "Merriweather", "Times New Roman", Georgia, serif;
+    --sans-font: 'Lato', Arial, Helvetica, sans-serif;
+    --text-shadow: 2px 2px 3px rgba(51, 51, 51, 0.7);
+}
+
+/*#region Generic */
+@font-face {
+    font-family: 'Lato';
+    src: url('./Fonts/Lato/Lato-Regular.ttf') format("truetype");
+}
+  
+  @font-face {
+    font-family: "Merriweather";
+    src: url("./Fonts/Merriweather/Merriweather-Regular.ttf") format("truetype");
+}
+
+* {
+    background-color: var(--main-grey);
+    box-sizing: border-box;
+    color: var(--main-white);
+    font-family: var(--sans-font);
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+    z-index: 5;
+}
+
+body {
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+h2 {
+    font-size: 3rem;
+    font-weight: normal;
+}
+
+svg {
+    max-height: 18vh;
+}
+/*#endregion Generic */
+
+/*#region Top Bar  */
+.top-bar {
+    align-items: center;
+    border-bottom: solid 1px var(--main-white);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+    /* box-shadow: 0px 0px 5px var(--main-white); */
+    height: 75px;
+}
+
+.home {
+    color: var(--main-blue);
+    font-size: 1.5rem;
+    font-family: var(--serif-font);
+}
+
+.volume {
+    max-height: 40px;
+}
+/*#endregion Top Bar  */
+
+/*#region Main Game  */
+.main-game {
+    background-color: var(--main-purple);
+    height: 100%;
+}
+
+.snake-head, .snake-body {
+    border-radius: 5px;
+    height: 15px;
+    position: fixed;
+    width: 15px;
+}
+
+.snake-head {
+    background-color: var(--main-blue);
+}
+
+.snake-body {
+    background-color: var(--main-white);
+}
+
+.tasty-bit {
+    background-color: var(--main-white);
+    border-radius: 5px;
+    height: 5px;
+    position: fixed;
+    width: 5px;
+}
+/*#endregion Main Game  */
+
+/*#region Bottom Bar  */
+.bottom-bar {
+    align-items: center;
+    border-top: solid 1px var(--main-white);
+    display: flex;
+    justify-content: space-between;
+    height: 150px;
+    padding: 0 15px;
+}
+
+.keypad {
+    max-height: 130px;
+}
+
+.pause, .restart {
+    max-height: 65px;
+}
+/*#endregion Bottom Bar  */

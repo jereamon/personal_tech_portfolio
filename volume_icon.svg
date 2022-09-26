@@ -1,0 +1,26 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 402.5 405">
+  <defs>
+    <style>
+      .volume-cls-1 {
+        fill: none;
+        stroke: #03888c;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 15px;
+      }
+
+      .volume-cls-2 {
+        fill: #4e3049;
+      }
+
+      .volume-cls-3 {
+        fill: #03888c;
+      }
+    </style>
+  </defs>
+  <path class="volume-cls-1" d="M400,450c31.12-53.29,50-123.32,50-200S431.12,103.29,400,50" transform="translate(-50 -47.5)"/>
+  <path class="volume-cls-1" d="M368.25,400c23.34-40,37.5-92.49,37.5-150s-14.16-110-37.5-150" transform="translate(-50 -47.5)"/>
+  <path class="volume-cls-1" d="M325,362.5c17.51-30,28.12-69.37,28.12-112.5S342.51,167.48,325,137.5" transform="translate(-50 -47.5)"/>
+  <path class="volume-cls-2" d="M269.39,446.8,135,358.46H70.16C59,358.46,50,348.67,50,336.59V163.41c0-12.08,9-21.87,20.16-21.87H135L269.39,53.2C282.83,44.37,300,54.86,300,71.9V428.1C300,445.14,282.83,455.63,269.39,446.8Z" transform="translate(-50 -47.5)"/>
+  <path class="volume-cls-3" d="M300,71.9V428.1a22.1,22.1,0,0,1-9.08,18.27C261,393.55,243,325,243,250s18-143.55,47.92-196.37A22.1,22.1,0,0,1,300,71.9Z" transform="translate(-50 -47.5)"/>
+</svg>

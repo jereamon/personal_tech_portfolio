@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JM Tech Portfolio</title>
+    <link rel="stylesheet" href="snake.css" />
+    <script src="gsap-public/minified/gsap.min.js"></script>
+    <script src="snake.js"></script>
+  </head>
+
+  <body>
+    <section class="top-bar">
+        <a class="home" href="index.html">JM</a>
+        <h2 class="score">0</h2>
+        <svg class="volume" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 402.5 405">
+            <defs>
+              <style>
+                .volume-cls-1 {
+                  fill: none;
+                  stroke: #03888c;
+                  stroke-linecap: round;
+                  stroke-miterlimit: 10;
+                  stroke-width: 15px;
+                }
+          
+                .volume-cls-2 {
+                  fill: #4e3049;
+                }
+          
+                .volume-cls-3 {
+                  fill: #03888c;
+                }
+              </style>
+            </defs>
+            <path class="volume-cls-1" d="M400,450c31.12-53.29,50-123.32,50-200S431.12,103.29,400,50" transform="translate(-50 -47.5)"/>
+            <path class="volume-cls-1" d="M368.25,400c23.34-40,37.5-92.49,37.5-150s-14.16-110-37.5-150" transform="translate(-50 -47.5)"/>
+            <path class="volume-cls-1" d="M325,362.5c17.51-30,28.12-69.37,28.12-112.5S342.51,167.48,325,137.5" transform="translate(-50 -47.5)"/>
+            <path class="volume-cls-2" d="M269.39,446.8,135,358.46H70.16C59,358.46,50,348.67,50,336.59V163.41c0-12.08,9-21.87,20.16-21.87H135L269.39,53.2C282.83,44.37,300,54.86,300,71.9V428.1C300,445.14,282.83,455.63,269.39,446.8Z" transform="translate(-50 -47.5)"/>
+            <path class="volume-cls-3" d="M300,71.9V428.1a22.1,22.1,0,0,1-9.08,18.27C261,393.55,243,325,243,250s18-143.55,47.92-196.37A22.1,22.1,0,0,1,300,71.9Z" transform="translate(-50 -47.5)"/>
+        </svg>
+    </section>
+
+    <section class="main-game">
+
+    </section>
+
+    <section class="bottom-bar">
+        <svg class="restart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+            <defs>
+              <style>
+                .restart-cls-1 {
+                  fill: #33333e;
+                }
+          
+                .restart-cls-2 {
+                  fill: #321e3e;
+                }
+          
+                .restart-cls-2, .restart-cls-3, .restart-cls-4, .restart-cls-5 {
+                  stroke: #ddd;
+                  stroke-miterlimit: 10;
+                }
+          
+                .restart-cls-2, .restart-cls-3, .restart-cls-5 {
+                  stroke-width: 5px;
+                }
+          
+                .restart-cls-3, .restart-cls-4, .restart-cls-5 {
+                  fill: none;
+                }
+          
+                .restart-cls-3 {
+                  stroke-linecap: round;
+                }
+              </style>
+            </defs>
+            <g id="Layer_2" data-name="Layer 2">
+              <rect class="restart-cls-1" width="500" height="500"/>
+              <rect class="restart-cls-2" x="50" y="50" width="400" height="400" rx="50"/>
+              <path class="restart-cls-3" d="M120,175.13h0A150,150,0,1,1,167.07,375"/>
+              <line class="restart-cls-4" x1="120" y1="175.13" x2="120" y2="175.12"/>
+              <path class="restart-cls-5" d="M82.31,183.19,108,238.32a7.43,7.43,0,0,0,12.83,1.12l34.9-49.82a7.44,7.44,0,0,0-5.45-11.68l-60.6-5.31A7.45,7.45,0,0,0,82.31,183.19Z"/>
+            </g>
+        </svg>
+
+        <svg class="keypad" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+            <defs>
+              <style>
+                .keypad-cls-1 {
+                  fill: #33333e;
+                }
+          
+                .keypad-cls-2, .keypad-cls-3 {
+                  fill: #03888c;
+                }
+          
+                .keypad-cls-2 {
+                  stroke: #ddd;
+                  stroke-linecap: round;
+                  stroke-miterlimit: 10;
+                  stroke-width: 5px;
+                }
+              </style>
+            </defs>
+            <g id="Layer_3" data-name="Layer 3">
+              <rect class="keypad-cls-1" width="500" height="500"/>
+              <path class="keypad-cls-2" d="M187.5,187.5V40.08A15.08,15.08,0,0,1,202.58,25h94.84A15.08,15.08,0,0,1,312.5,40.08V187.5"/>
+              <path class="keypad-cls-2" d="M312.5,187.5H459.75A15.25,15.25,0,0,1,475,202.75v94.5a15.25,15.25,0,0,1-15.25,15.25H312.5"/>
+              <path class="keypad-cls-2" d="M312.5,312.5V459.92A15.08,15.08,0,0,1,297.42,475H202.58a15.08,15.08,0,0,1-15.08-15.08V312.5"/>
+              <path class="keypad-cls-2" d="M187.5,312.5H40.08A15.08,15.08,0,0,1,25,297.42V202.58A15.08,15.08,0,0,1,40.08,187.5H187.5"/>
+              <rect class="keypad-cls-3" x="190" y="190" width="120" height="120"/>
+              <polygon class="keypad-cls-3" points="310 190 312.5 190 312.5 310 310 310 310 312.5 190 312.5 190 310 187.5 310 187.5 190 190 190 190 187.5 310 187.5 310 190"/>
+              <path class="keypad-cls-2" d="M115,211,55,245.67a5,5,0,0,0,0,8.66L115,289a5,5,0,0,0,7.5-4.33V215.36A5,5,0,0,0,115,211Z"/>
+              <path class="keypad-cls-2" d="M377.5,215.36v69.28A5,5,0,0,0,385,289l60-34.64a5,5,0,0,0,0-8.66L385,211A5,5,0,0,0,377.5,215.36Z"/>
+              <path class="keypad-cls-2" d="M245.67,55,211,115a5,5,0,0,0,4.33,7.5h69.28A5,5,0,0,0,289,115L254.33,55A5,5,0,0,0,245.67,55Z"/>
+              <path class="keypad-cls-2" d="M254.33,445,289,385a5,5,0,0,0-4.33-7.5H215.36A5,5,0,0,0,211,385l34.64,60A5,5,0,0,0,254.33,445Z"/>
+            </g>
+        </svg>
+
+        <svg class="pause" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+            <defs>
+              <style>
+                .pause-cls-1 {
+                  fill: #33333e;
+                }
+          
+                .pause-cls-2 {
+                  fill: #321e3e;
+                }
+          
+                .pause-cls-2, .pause-cls-3 {
+                  stroke: #ddd;
+                  stroke-miterlimit: 10;
+                  stroke-width: 5px;
+                }
+          
+                .pause-cls-3 {
+                  fill: none;
+                  stroke-linecap: round;
+                }
+              </style>
+            </defs>
+            <rect class="pause-cls-1" width="500" height="500"/>
+            <rect class="pause-cls-2" x="50" y="50" width="400" height="400" rx="50"/>
+            <line class="pause-cls-3" x1="175" y1="100" x2="175" y2="400"/>
+            <line class="pause-cls-3" x1="325" y1="100" x2="325" y2="400"/>
+        </svg>        
+    </section>
+  </body>
+</html>

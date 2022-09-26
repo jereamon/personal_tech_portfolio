@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <defs>
+    <style>
+      .restart-cls-1 {
+        fill: #33333e;
+      }
+
+      .restart-cls-2 {
+        fill: #321e3e;
+      }
+
+      .restart-cls-2, .restart-cls-3, .restart-cls-4, .restart-cls-5 {
+        stroke: #ddd;
+        stroke-miterlimit: 10;
+      }
+
+      .restart-cls-2, .restart-cls-3, .restart-cls-5 {
+        stroke-width: 5px;
+      }
+
+      .restart-cls-3, .restart-cls-4, .restart-cls-5 {
+        fill: none;
+      }
+
+      .restart-cls-3 {
+        stroke-linecap: round;
+      }
+    </style>
+  </defs>
+  <g id="Layer_2" data-name="Layer 2">
+    <rect class="restart-cls-1" width="500" height="500"/>
+    <rect class="restart-cls-2" x="50" y="50" width="400" height="400" rx="50"/>
+    <path class="restart-cls-3" d="M120,175.13h0A150,150,0,1,1,167.07,375"/>
+    <line class="restart-cls-4" x1="120" y1="175.13" x2="120" y2="175.12"/>
+    <path class="restart-cls-5" d="M82.31,183.19,108,238.32a7.43,7.43,0,0,0,12.83,1.12l34.9-49.82a7.44,7.44,0,0,0-5.45-11.68l-60.6-5.31A7.45,7.45,0,0,0,82.31,183.19Z"/>
+  </g>
+</svg>
