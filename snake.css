@@ -59,6 +59,7 @@ svg {
     align-items: center;
     background-color: var(--main-grey-medium-opacity);
     display: flex;
+    /* display: none; */
     justify-content: center;
     height: 100%;
     left: 0;
@@ -100,17 +101,22 @@ svg {
 /*#region Main Game  */
 .main-game {
     background-color: var(--main-purple);
+    display: grid;
+    grid-template-columns: repeat(20, auto);
+    grid-template-rows: repeat(20, auto);
     height: 100%;
 }
 
 .snake-head, .snake-body {
     border-radius: 5px;
-    height: 15px;
-    position: fixed;
-    width: 15px;
+    /* height: 15px; */
+    height: 100%;
+    /* position: fixed; */
+    /* width: 15px; */
+    width: 100%;
 }
 
-.snake-head {
+.snake-head.snake-body {
     background-color: var(--main-blue);
 }
 
