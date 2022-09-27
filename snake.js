@@ -1,16 +1,18 @@
 document.addEventListener("DOMContentLoaded", function() {
     let main_game = document.querySelector(".main-game");
 
+    // It's minus 225 because the top bar is 75px tall and bottom bar is 150px tall
     main_game.style.height = (window.innerHeight - 225).toString() + "px";
 
     // Function defined at bottom
     // Called at top so that the snake is in place when I populate the snake
     // direction array.
-    create_initial_snake();
+    let rows_cols = [create_initial_snake()];
+    rows_cols = rows_cols.toString().split(",")
     
 
     // let snake_speed = 1,
-    let snake_dir   = 3,
+    let snake_dir   = 2,
         key_left    = document.querySelector(".keypad-cls-2.left"),
         key_right   = document.querySelector(".keypad-cls-2.right"),
         key_up      = document.querySelector(".keypad-cls-2.up"),
@@ -19,6 +21,32 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // -------------------------------------------------------------------------
     //#region Event listeners for the game keypad
+    document.onkeydown = function(e) {
+        switch (e.key) {
+            case 'ArrowLeft':
+                if (snake_dir != 1) {
+                    snake_dir = 0;
+                }
+                break;
+            case 'ArrowRight':
+                if (snake_dir != 0) {
+                    snake_dir = 1;
+                }
+                break;
+            case 'ArrowUp':
+                if (snake_dir != 3) {
+                    snake_dir = 2;
+                }
+                break;
+            case 'ArrowDown':
+                if (snake_dir != 2) {
+                    snake_dir = 3;
+                }
+                break;
+        }
+    }
+
+
     key_left.addEventListener("click", () => {
         console.log("left");
         // If snake isn't going right we can set it to left
@@ -119,7 +147,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     
-
+    // -------------------------------------------------------------------------
+    //#region Animation Frame variables and callbacks
     let move_last  = Date.now(),
         new_time   = Date.now(),
         audio_last = Date.now(),
@@ -127,6 +156,7 @@ document.addEventListener("DOMContentLoaded", function() {
         play       = false,
         // play       = true,
         start_button_container = document.querySelector(".start_button_container");
+
 
     function repeatOften(time) {
         new_time = Date.now();
@@ -137,15 +167,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 move_last = Date.now();
             }
-            // if (new_time - audio_last >= audio.duration) {
-            //     audio.play()
-            // }
+            if (new_time - audio_last >= audio.duration) {
+                audio.play()
+            }
         }
 
         requestAnimationFrame(repeatOften);
     }
 
     requestAnimationFrame(repeatOften);
+
 
     document.addEventListener("visibilitychange", () => {
         if (document.visibilityState != 'visible') {
@@ -154,10 +185,14 @@ document.addEventListener("DOMContentLoaded", function() {
             start_button_container.style.display = "flex";
         }
     })
+    //#endregion Animation Frame variables and callbacks
+    // -------------------------------------------------------------------------
 
+
+    
     document.querySelector(".start_button").addEventListener('click', () => {
         play = true;
-        // audio.play();
+        audio.play();
         start_button_container.style.display = "none";
     });
 
@@ -170,16 +205,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-    let tasty_bit = document.createElement("div");
-    tasty_bit.classList.add("tasty-bit");
-    tasty_bit.style.top  = (window.innerHeight / 2).toString() + "px";
-    tasty_bit.style.left = (window.innerWidth / 2).toString() + "px";
-    main_game.appendChild(tasty_bit);
-
+    
+    // -------------------------------------------------------------------------
+    //#region Game initialization
+    add_tasty_bit(rows_cols[0], rows_cols[1]);
 
 
     function create_initial_snake() {
-        for (let i = 0; i < 8; i++) {
+        let num_rows = 0;
+
+        for (let i = 0; i < 4; i++) {
             let snake_piece = document.createElement("div");
     
             if (i == 0) {
@@ -189,23 +224,58 @@ document.addEventListener("DOMContentLoaded", function() {
             snake_piece.classList.add("snake-body");
             snake_piece.classList.add(i);
 
-            snake_piece.style.gridArea = `${9 - i} / 1 / ${10- i} / 2`;
+            snake_piece.style.gridArea = `${15 + i} / 9 / ${16 + i} / 10`;
 
-            let small_gap = 5;
+            let main_game = document.querySelector(".main-game");
+            // let small_gap = 5;
             if (main_game.offsetHeight > main_game.offsetWidth) {
-                main_game.style.columnGap = small_gap.toString() + "px";
+                num_rows = Math.floor(((main_game.offsetHeight - 10) / (main_game.offsetWidth - 10) * 20));
 
-                let tall_grid_square = (main_game.offsetHeight / 20) - (small_gap * 2),
-                    short_grid_square = (main_game.offsetWidth / 20);
+                let row_height = Math.floor(main_game.offsetHeight / num_rows),
+                    row_height_min_gap = row_height - 5,
+                    col_width = (main_game.offsetWidth - 10) / 20,
+                    col_width_min_gap = col_width - 5;
 
-                if (tall_grid_square - short_grid_square > 1) {
-                    main_game.style.rowGap = (Math.floor((tall_grid_square - short_grid_square) / 2)).toString() + "px";
-                } else {
-                    main_game.style.rowGap = small_gap.toString() + "px";
-                }
+                main_game.style.gridTemplateColumns = `repeat(20, ${col_width_min_gap}px)`;
+                console.log(`main_game height: ${main_game.offsetHeight}, num_rows: ${num_rows}, row_height: ${row_height}, new height = ${num_rows * row_height}`);
+                main_game.style.gridTemplateRows = `repeat(${num_rows}, ${row_height_min_gap}px)`;
             }
     
             main_game.appendChild(snake_piece);
         }
+
+        return [num_rows, 20];
     }
+
+
+    function add_tasty_bit(num_rows, num_cols) {
+        let tasty_bit_row = Math.floor(Math.random() * (num_rows - 2) + 2);
+        let tasty_bit_col = Math.floor(Math.random() * (num_cols - 2) + 2);
+        console.log(`tasty bit row col: ${tasty_bit_row} ${tasty_bit_col}`);
+
+        switch (tasty_bit_row) {
+            case 15:
+            case 16:
+            case 17:
+            case 18:
+                switch (tasty_bit_col) {
+                    case 9:
+                        tasty_bit_col += 1;
+                        break;
+                }
+            break;
+        }
+
+        let tasty_bit = document.createElement("div");
+        tasty_bit.classList.add("tasty-bit");
+        tasty_bit.style.gridArea = `${tasty_bit_row} / ${tasty_bit_col} / ${tasty_bit_row + 1} / ${tasty_bit_col + 1}`;
+        main_game.appendChild(tasty_bit);
+    }
+
+    function remove_tasty_bit() {
+        let tasty_bit = document.querySelector(".tasty-bit");
+        tasty_bit.remove();
+    }
+    //#endregion
+    // -------------------------------------------------------------------------
 });

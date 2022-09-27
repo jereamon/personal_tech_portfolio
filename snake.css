@@ -79,7 +79,7 @@ svg {
 /*#region Top Bar  */
 .top-bar {
     align-items: center;
-    border-bottom: solid 1px var(--main-white);
+    /* border-bottom: solid 1px var(--main-white); */
     display: flex;
     justify-content: space-between;
     padding: 0 15px;
@@ -100,11 +100,16 @@ svg {
 
 /*#region Main Game  */
 .main-game {
+    align-items: center;
     background-color: var(--main-purple);
+    border: solid 1px white;
     display: grid;
+    grid-gap: 5px;
     grid-template-columns: repeat(20, auto);
     grid-template-rows: repeat(20, auto);
+    justify-items: center;
     height: 100%;
+    padding: 5px;
 }
 
 .snake-head, .snake-body {
@@ -127,16 +132,16 @@ svg {
 .tasty-bit {
     background-color: var(--main-white);
     border-radius: 5px;
-    height: 5px;
-    position: fixed;
-    width: 5px;
+    height: 25%;
+    /* position: fixed; */
+    width: 25%;
 }
 /*#endregion Main Game  */
 
 /*#region Bottom Bar  */
 .bottom-bar {
     align-items: center;
-    border-top: solid 1px var(--main-white);
+    /* border-top: solid 1px var(--main-white); */
     display: flex;
     justify-content: space-between;
     height: 150px;
