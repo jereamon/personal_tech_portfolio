@@ -2,54 +2,69 @@ document.addEventListener("DOMContentLoaded", function() {
     let main_game = document.querySelector(".main-game");
 
     main_game.style.height = (window.innerHeight - 225).toString() + "px";
+
+    // Function defined at bottom
+    // Called at top so that the snake is in place when I populate the snake
+    // direction array.
+    create_initial_snake();
     
 
     // let snake_speed = 1,
     let snake_x_dir = 1,
         snake_y_dir = 0,
+        snake_dir   = 3,
         key_left    = document.querySelector(".keypad-cls-2.left"),
         key_right   = document.querySelector(".keypad-cls-2.right"),
         key_up      = document.querySelector(".keypad-cls-2.up"),
-        key_down    = document.querySelector(".keypad-cls-2.down")
+        key_down    = document.querySelector(".keypad-cls-2.down");
+    let snake_body = document.querySelectorAll(".snake-body"),
+        piece_dir = []; // will give the direction each snake piece most recently traveled.
 
-    let snake_head = document.querySelector(".snake-head");
 
+    for (let i = 0; i < snake_body.length; i++) {
+        piece_dir.push(0);
+    }
+
+    // -------------------------------------------------------------------------
     //#region Event listeners for the game keypad
     key_left.addEventListener("click", () => {
         console.log("left");
-        if (snake_x_dir != 1) {
-            snake_x_dir = -1;
-            snake_y_dir = 0;
+        // If snake isn't going right we can set it to left
+        if (snake_dir != 1) {
+            snake_dir = 0;
         }
     })
 
     key_right.addEventListener("click", () => {
         console.log("right");
-        if (snake_x_dir != -1) {
-            snake_x_dir = 1;
-            snake_y_dir = 0;
+        // If snake isn't going left we can set it to right
+        if (snake_dir != 0) {
+            snake_dir = 1;
         }
     })
 
     key_up.addEventListener("click", () => {
         console.log("up");
-        if (snake_y_dir != 1) {
-            snake_y_dir = -1;
-            snake_x_dir = 0;
+        // If snake isn't going down we can set it to up
+        if (snake_dir != 3) {
+            snake_dir = 2;
         }
     })
 
     key_down.addEventListener("click", () => {
+        // If snake isn't going up we can set it to down
         console.log("down");
-        if (snake_y_dir != -1) {
-            snake_y_dir = 1;
-            snake_x_dir = 0;
+        if (snake_dir != 2) {
+            snake_dir = 3;
         }
     })
     //#endregion Event listeners for the game keypad
+    // -------------------------------------------------------------------------
 
 
     function parse_grid_area(grid_area) {
+        /* Element's grid area style is a string with forward slashes in it
+        this converts it to an integer array */
         return grid_area.split(" / ").map(Number);
     }
 
@@ -57,177 +72,127 @@ document.addEventListener("DOMContentLoaded", function() {
     function move_snake() {
         let snake_body = document.querySelectorAll(".snake-body");
 
-        // This gets a little weird.
-        // First we check if the snake is traveling to the left or right
-        if (snake_x_dir == 1 || snake_x_dir == -1) {
-            for (let i = 0; i < snake_body.length; i++) {
+        // Ok we get the grid area value for the snake piece in 
+        // snake_body at index i. We parse it to get an array of integers.
+        let head_grid_area = parse_grid_area(snake_body[0].style.gridArea),
+            old_grid_area  = [],
+            cur_grid_area  = [],
+            head_moved = false;
 
-                // Ok we get the grid area value for the snake piece in 
-                // snake_body at index i. We parse it to get an array of integers.
-                let cur_grid_area = parse_grid_area(snake_body[i].style.gridArea);
-
-                // Checks if it's the snake head and whether it can move left or right without 
-                // going beyond a wall.
-                if (i == 0 && (cur_grid_area[1] + (snake_x_dir) < 20 || cur_grid_area[1] + (snake_x_dir) > 0)) {
-                    // If it can the snake head is moved left or right by one column
-                    snake_body[0].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] + (snake_x_dir)} / ${cur_grid_area[2]} / ${cur_grid_area[3] + (snake_x_dir)}`;
-                } else {
-                    // We end up here if it's not the snake head.
-                    // First we get the grid area for the previous element.
-                    // The previous element will be closer to the head.
-                    let old_grid_area = parse_grid_area(snake_body[i - 1].style.gridArea);
-
-                    row_difference = old_grid_area[0] - cur_grid_area[0];
-
-                    // First we check if the current element is further than 1 column
-                    // from the previous element.
-                    if (Math.abs(row_difference) > 0) {
-                        // If it  one column away we move it in the
-                        // direction of the previus element.
-                        // This ensures the snake tail moves above the head when
-                        // going from left or right to up or down.
-                        let move_dir = 1
-                        if (row_difference < 0) {
-                            move_dir = -1
-                        }
-                        snake_body[i].style.gridArea = `${cur_grid_area[0] + move_dir} / ${cur_grid_area[1]} / ${cur_grid_area[2] + move_dir} / ${cur_grid_area[3]}`
-
-
-                    // If it's within 1 column we check to see if it's within 1
-                    // row of the previous element.
-                    } else if (Math.abs(old_grid_area[1] - cur_grid_area[1]) > 1) {
-                        // If it's not then we move it one row toward the current
-                        // snake_x_dir
-                        snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] + (snake_x_dir)} / ${cur_grid_area[2]} / ${cur_grid_area[3] + (snake_x_dir)}`
-                    }
+        switch(snake_dir) {
+            case 0:
+                // move snake head left if possible
+                if (head_grid_area[1] - 1 > 0) {
+                    snake_body[0].style.gridArea = `${head_grid_area[0]} / ${head_grid_area[1] - 1} / ${head_grid_area[2]} / ${head_grid_area[3] - 1}`;
+                    piece_dir[0] = 0;
+                    head_moved = true;
                 }
-            }
-        } else {
-            for (let i = 0; i < snake_body.length; i++) {
-                console.log(`i: ${i}`)
-                let cur_grid_area = parse_grid_area(snake_body[i].style.gridArea);
-
-                if (i == 0 && cur_grid_area[0] + (snake_y_dir) < 20 && cur_grid_area[0] + (snake_y_dir) > 0) {
-                    console.log(cur_grid_area)
-                    snake_body[0].style.gridArea = `${cur_grid_area[0] + snake_y_dir} / ${cur_grid_area[1]} / ${cur_grid_area[2] + snake_y_dir} / ${cur_grid_area[3]}`
-                } else {
-                    
-                    console.log(parse_grid_area(snake_body[i - 1].style.gridArea))
-                    console.log(cur_grid_area)
-                    let old_grid_area = parse_grid_area(snake_body[i - 1].style.gridArea);
-                    // console.log(`old_grid_area[1]: ${old_grid_area[1]}, cur_grid_area[1]: ${cur_grid_area[1]}`)
-                    let col_difference = old_grid_area[1] - cur_grid_area[1];
-                        
-
-                    // This means the snake is now moving vertically and the previous
-                    // snake piece (the once closer to the head) is 1 column
-                    // left or right of the current column.
-                    if (Math.abs(col_difference) > 0) {
-                        // console.log(`${cur_grid_area[0]} / ${cur_grid_area[1] + (old_grid_area[1] - cur_grid_area[1])} / ${cur_grid_area[2]} / ${cur_grid_area[3] + (old_grid_area[1] - cur_grid_area[1])}`)
-                        console.log(col_difference)
-                        let move_dir = 1;
-                        if (col_difference < 0) {
-                            move_dir = -1
+                break;
+            case 1:
+                // move snake head right if possible
+                if (head_grid_area[1] + 1 < 20) {
+                    snake_body[0].style.gridArea = `${head_grid_area[0]} / ${head_grid_area[1] + 1} / ${head_grid_area[2]} / ${head_grid_area[3] + 1}`;
+                    piece_dir[0] = 1;
+                    head_moved = true;
+                }
+                break;
+            case 2:
+                if (head_grid_area[0] - 1 > 0) {
+                    snake_body[0].style.gridArea = `${head_grid_area[0] - 1} / ${head_grid_area[1]} / ${head_grid_area[2] - 1} / ${head_grid_area[3]}`;
+                    piece_dir[0] = 2;
+                    head_moved = true;
+                }
+                break;
+            case 3:
+                if (head_grid_area[0] + 1 < 20) {
+                    snake_body[0].style.gridArea = `${head_grid_area[0] + 1} / ${head_grid_area[1]} / ${head_grid_area[2] + 1} / ${head_grid_area[3]}`;
+                    piece_dir[0] = 3;
+                    head_moved = true;
+                }
+                break;
+        }
+        
+        if (head_moved) {
+            for (let i = 1; i < snake_body.length; i++) {
+                old_grid_area = parse_grid_area(snake_body[i - 1].style.gridArea);
+                cur_grid_area = parse_grid_area(snake_body[i].style.gridArea);
+                
+                switch(piece_dir[i - 1]) {
+                    case 0:
+                        if (piece_dir[i] == 2) {
+                            snake_body[i].style.gridArea = `${cur_grid_area[0] - 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] - 1} / ${cur_grid_area[3]}`;    
+                        } else if (piece_dir[i] == 3) {
+                            snake_body[i].style.gridArea = `${cur_grid_area[0] + 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] + 1} / ${cur_grid_area[3]}`;    
+                        } else {
+                        // if (old_grid_area[0] - cur_grid_area[0] > 0) {
+                        //     console.log("first if")
+                        //     // snake_body[i].style.rowStart = cur_grid_area[0] - 1;
+                        //     snake_body[i].style.gridArea = `${cur_grid_area[0] + 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] + 1} / ${cur_grid_area[3]}`;    
+                        //     piece_dir[i] = 3;
+                        // } else if (old_grid_area[0] - cur_grid_area[0] < 0) {
+                        //     console.log("else if")
+                        //     snake_body[i].style.gridArea = `${cur_grid_area[0] - 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] - 1} / ${cur_grid_area[3]}`;    
+                        //     piece_dir[i] = 2;
+                        // } else {
+                            snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] - 1} / ${cur_grid_area[2]} / ${cur_grid_area[3] - 1}`;  
                         }
-                        snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] + move_dir} / ${cur_grid_area[2]} / ${cur_grid_area[3] + move_dir}`
-                    
-                    } else if (Math.abs(old_grid_area[0] - cur_grid_area[0]) > 1) {
-                        snake_body[i].style.gridArea = `${cur_grid_area[0] + (snake_y_dir)} / ${cur_grid_area[1]} / ${cur_grid_area[2] + (snake_y_dir)} / ${cur_grid_area[3]}`
-                    }
+                        piece_dir[i] = 0;
+                        break;
+                    case 1:
+                        console.log("move right outer")
+                        // console.log(`piece_dir[i - 1]: ${piece_dir[i -1]}`)
+                        console.log(`piece_dir[i]: ${piece_dir[i]}`)
+                        if (piece_dir[i] == 2) {
+                            snake_body[i].style.gridArea = `${cur_grid_area[0] - 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] - 1} / ${cur_grid_area[3]}`;    
+                        } else if (piece_dir[i] == 3) {
+                            snake_body[i].style.gridArea = `${cur_grid_area[0] + 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] + 1} / ${cur_grid_area[3]}`;    
+                        } else {
+                            snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] + 1} / ${cur_grid_area[2]} / ${cur_grid_area[3] + 1}`;    
+                            piece_dir[i] = 1;
+                        }
+                        
+                        // if (old_grid_area[0] - cur_grid_area[0] > 0) {
+                        //     // snake_body[i].style.rowStart = cur_grid_area[0] - 1;
+                        //     snake_body[i].style.gridArea = `${cur_grid_area[0] + 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] + 1} / ${cur_grid_area[3]}`;    
+                        //     piece_dir[i] = 3;
+                        // } else if (old_grid_area[0] - cur_grid_area[0] < 0) {
+                        //     snake_body[i].style.gridArea = `${cur_grid_area[0] - 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] - 1} / ${cur_grid_area[3]}`;    
+                        //     piece_dir[i] = 2;
+                        // } else {
+                        //     snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] + 1} / ${cur_grid_area[2]} / ${cur_grid_area[3] + 1}`;
+                        //     piece_dir[i] = 1;
+                        // }
+                        break;
+                    case 2:
+                        if (old_grid_area[1] - cur_grid_area[1] > 0) {
+                            snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] + 1} / ${cur_grid_area[2]} / ${cur_grid_area[3] + 1}`;
+                            piece_dir[i] = 0
+                        } else if (old_grid_area[1] - cur_grid_area[1] < 0) {
+                            snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] - 1} / ${cur_grid_area[2]} / ${cur_grid_area[3] - 1}`;
+                            piece_dir[i] = 1
+                        } else {
+                            snake_body[i].style.gridArea = `${cur_grid_area[0] - 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] - 1} / ${cur_grid_area[3]}`;
+                            piece_dir[i] = 2;
+                        }
+                        break;
+                    case 3:
+                        if (old_grid_area[1] - cur_grid_area[1] > 0) {
+                            snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] + 1} / ${cur_grid_area[2]} / ${cur_grid_area[3] + 1}`;
+                            piece_dir[i] = 0
+                        } else if (old_grid_area[1] - cur_grid_area[1] < 0) {
+                            snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] - 1} / ${cur_grid_area[2]} / ${cur_grid_area[3] - 1}`;
+                            piece_dir[i] = 1
+                        } else {
+                            snake_body[i].style.gridArea = `${cur_grid_area[0] + 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] + 1} / ${cur_grid_area[3]}`;
+                            piece_dir[i] = 3;
+                        }
+                        break;
                 }
             }
             console.log("\n")
         }
-
-                // if the snake is traveling left or right and isn't too close
-                // to the edge to move again.
-        //         if (pos_after_move >= 0 || pos_after_move <= window.innerWidth) {
-        //             // we move the snake head in the direction of snake_x_dir
-        //             snake_body[0].style.left = (snake_body[0].offsetLeft + ((17) * snake_x_dir)).toString() + "px";
-
-        //             // Then we loop over each body piece
-        //             for (let i = 1; i < snake_body.length; i++) {
-        //                 // if the piece is above the snake's head we move it down
-        //                 if (snake_body[i].style.top < snake_body[i - 1].style.top) {
-        //                     snake_body[i].style.top = (snake_body[i].offsetTop + ((17))).toString() + "px";
-                        
-        //                 // if the piece is below the snake's head we move it up
-        //                 } else if (snake_body[i].style.top > snake_body[i - 1].style.top) {
-        //                     snake_body[i].style.top = (snake_body[i].offsetTop + ((-17))).toString() + "px";
-
-        //                 // otherwise we move it left or right in the direction of snake_x_dir
-        //                 } else {
-        //                     snake_body[i].style.left = (snake_body[i].offsetLeft + ((17) * snake_x_dir)).toString() + "px";
-        //                 }
-        //             }
-        //         }
-        // } else {
-        //     let pos_after_move = (snake_body[0].offsetTop + ((17)) * snake_y_dir);
-
-        //     if (pos_after_move >= 75 && pos_after_move <= (window.innerHeight - 150)) {
-        //         snake_body[0].style.top  = (snake_body[0].offsetTop + (17 * snake_y_dir)).toString() + "px";
-
-        //         for (let i = 1; i < snake_body.length; i++) {
-        //             if (snake_body[i].style.left < snake_body[i - 1].style.left) {
-        //                 snake_body[i].style.left = (snake_body[i].offsetLeft + ((17))).toString() + "px";
-        //             } else if (snake_body[i].style.left > snake_body[i - 1].style.left) {
-        //                 snake_body[i].style.left = (snake_body[i].offsetLeft + ((-17))).toString() + "px";
-        //             } else {
-        //                 snake_body[i].style.top = ((snake_body[i].offsetTop + (17 * snake_y_dir)) ).toString() + "px";
-        //             }
-        //         }
-        //     }
     }
 
-    // function move_snake() {
-    //     let snake_body = document.querySelectorAll(".snake-body");
-
-
-    //     // This gets a little weird.
-    //     // First we check if the snake is traveling to the left or right
-    //     if (snake_x_dir == 1 || snake_x_dir == -1) {
-    //             let pos_after_move = snake_body[0].offsetTop + ((17) * snake_x_dir);
-
-    //             // if the snake is traveling left or right and isn't too close
-    //             // to the edge to move again.
-    //             if (pos_after_move >= 0 || pos_after_move <= window.innerWidth) {
-    //                 // we move the snake head in the direction of snake_x_dir
-    //                 snake_body[0].style.left = (snake_body[0].offsetLeft + ((17) * snake_x_dir)).toString() + "px";
-
-    //                 // Then we loop over each body piece
-    //                 for (let i = 1; i < snake_body.length; i++) {
-    //                     // if the piece is above the snake's head we move it down
-    //                     if (snake_body[i].style.top < snake_body[i - 1].style.top) {
-    //                         snake_body[i].style.top = (snake_body[i].offsetTop + ((17))).toString() + "px";
-                        
-    //                     // if the piece is below the snake's head we move it up
-    //                     } else if (snake_body[i].style.top > snake_body[i - 1].style.top) {
-    //                         snake_body[i].style.top = (snake_body[i].offsetTop + ((-17))).toString() + "px";
-
-    //                     // otherwise we move it left or right in the direction of snake_x_dir
-    //                     } else {
-    //                         snake_body[i].style.left = (snake_body[i].offsetLeft + ((17) * snake_x_dir)).toString() + "px";
-    //                     }
-    //                 }
-    //             }
-    //     } else {
-    //         let pos_after_move = (snake_body[0].offsetTop + ((17)) * snake_y_dir);
-
-    //         if (pos_after_move >= 75 && pos_after_move <= (window.innerHeight - 150)) {
-    //             snake_body[0].style.top  = (snake_body[0].offsetTop + (17 * snake_y_dir)).toString() + "px";
-
-    //             for (let i = 1; i < snake_body.length; i++) {
-    //                 if (snake_body[i].style.left < snake_body[i - 1].style.left) {
-    //                     snake_body[i].style.left = (snake_body[i].offsetLeft + ((17))).toString() + "px";
-    //                 } else if (snake_body[i].style.left > snake_body[i - 1].style.left) {
-    //                     snake_body[i].style.left = (snake_body[i].offsetLeft + ((-17))).toString() + "px";
-    //                 } else {
-    //                     snake_body[i].style.top = ((snake_body[i].offsetTop + (17 * snake_y_dir)) ).toString() + "px";
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
 
     
 
@@ -302,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function() {
             snake_piece.classList.add("snake-body");
             snake_piece.classList.add(i);
 
-            snake_piece.style.gridArea = `3 / ${4 - i} / 4 / ${5- i}`;
+            snake_piece.style.gridArea = `${5 - i} / 1 / ${6- i} / 2`;
 
             let small_gap = 5;
             if (main_game.offsetHeight > main_game.offsetWidth) {
@@ -321,7 +286,4 @@ document.addEventListener("DOMContentLoaded", function() {
             main_game.appendChild(snake_piece);
         }
     }
-
-
-    create_initial_snake();
 });
