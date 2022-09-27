@@ -1,11 +1,12 @@
 :root {
     --main-grey: #333;
+    --main-grey-medium-opacity: rgba(51, 51, 51, .75);
     --main-white: #eee;
     --secondary-white: #ccc;
     --main-purple: #321E3E;
     /* --main-orange: #9E6200; */
     --main-orange: #E17F5D;
-    --main-orange-low-opacity: rgba(225, 127, 93, .8);
+    --main-orange-low-opacity: rgba(225, 127, 93, .75);
     --main-blue: #00888C;
     /* --main-blue: #4E8AB2; */
     --serif-font: "Merriweather", "Times New Roman", Georgia, serif;
@@ -52,6 +53,27 @@ svg {
     max-height: 18vh;
 }
 /*#endregion Generic */
+
+
+.start_button_container {
+    align-items: center;
+    background-color: var(--main-grey-medium-opacity);
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.start_button {
+    background-color: var(--main-purple);
+    border-radius: 15px;
+    color: var(--main-white);
+    font-size: 55px;
+    padding: 15px;
+}
 
 /*#region Top Bar  */
 .top-bar {
