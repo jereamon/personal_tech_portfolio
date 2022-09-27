@@ -10,20 +10,12 @@ document.addEventListener("DOMContentLoaded", function() {
     
 
     // let snake_speed = 1,
-    let snake_x_dir = 1,
-        snake_y_dir = 0,
-        snake_dir   = 3,
+    let snake_dir   = 3,
         key_left    = document.querySelector(".keypad-cls-2.left"),
         key_right   = document.querySelector(".keypad-cls-2.right"),
         key_up      = document.querySelector(".keypad-cls-2.up"),
         key_down    = document.querySelector(".keypad-cls-2.down");
-    let snake_body = document.querySelectorAll(".snake-body"),
-        piece_dir = []; // will give the direction each snake piece most recently traveled.
 
-
-    for (let i = 0; i < snake_body.length; i++) {
-        piece_dir.push(0);
-    }
 
     // -------------------------------------------------------------------------
     //#region Event listeners for the game keypad
@@ -75,16 +67,21 @@ document.addEventListener("DOMContentLoaded", function() {
         // Ok we get the grid area value for the snake piece in 
         // snake_body at index i. We parse it to get an array of integers.
         let head_grid_area = parse_grid_area(snake_body[0].style.gridArea),
-            old_grid_area  = [],
-            cur_grid_area  = [],
+            old_grid_areas = []
             head_moved = false;
+
+        // We populate this array here so that we have the old positions of each
+        // snake segment before any are moved.
+        for (let i = 0; i < snake_body.length; i++) {
+            old_grid_areas.push(snake_body[i].style.gridArea);
+        }
+
 
         switch(snake_dir) {
             case 0:
                 // move snake head left if possible
                 if (head_grid_area[1] - 1 > 0) {
                     snake_body[0].style.gridArea = `${head_grid_area[0]} / ${head_grid_area[1] - 1} / ${head_grid_area[2]} / ${head_grid_area[3] - 1}`;
-                    piece_dir[0] = 0;
                     head_moved = true;
                 }
                 break;
@@ -92,105 +89,32 @@ document.addEventListener("DOMContentLoaded", function() {
                 // move snake head right if possible
                 if (head_grid_area[1] + 1 < 20) {
                     snake_body[0].style.gridArea = `${head_grid_area[0]} / ${head_grid_area[1] + 1} / ${head_grid_area[2]} / ${head_grid_area[3] + 1}`;
-                    piece_dir[0] = 1;
                     head_moved = true;
                 }
                 break;
             case 2:
+                // move snake head right if possible
                 if (head_grid_area[0] - 1 > 0) {
                     snake_body[0].style.gridArea = `${head_grid_area[0] - 1} / ${head_grid_area[1]} / ${head_grid_area[2] - 1} / ${head_grid_area[3]}`;
-                    piece_dir[0] = 2;
                     head_moved = true;
                 }
                 break;
             case 3:
                 if (head_grid_area[0] + 1 < 20) {
                     snake_body[0].style.gridArea = `${head_grid_area[0] + 1} / ${head_grid_area[1]} / ${head_grid_area[2] + 1} / ${head_grid_area[3]}`;
-                    piece_dir[0] = 3;
                     head_moved = true;
                 }
                 break;
         }
         
+
+        // If the head moved then we update each body segment with the coordinates
+        // of the previous body segment.
         if (head_moved) {
             for (let i = 1; i < snake_body.length; i++) {
-                old_grid_area = parse_grid_area(snake_body[i - 1].style.gridArea);
-                cur_grid_area = parse_grid_area(snake_body[i].style.gridArea);
-                
-                switch(piece_dir[i - 1]) {
-                    case 0:
-                        if (piece_dir[i] == 2) {
-                            snake_body[i].style.gridArea = `${cur_grid_area[0] - 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] - 1} / ${cur_grid_area[3]}`;    
-                        } else if (piece_dir[i] == 3) {
-                            snake_body[i].style.gridArea = `${cur_grid_area[0] + 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] + 1} / ${cur_grid_area[3]}`;    
-                        } else {
-                        // if (old_grid_area[0] - cur_grid_area[0] > 0) {
-                        //     console.log("first if")
-                        //     // snake_body[i].style.rowStart = cur_grid_area[0] - 1;
-                        //     snake_body[i].style.gridArea = `${cur_grid_area[0] + 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] + 1} / ${cur_grid_area[3]}`;    
-                        //     piece_dir[i] = 3;
-                        // } else if (old_grid_area[0] - cur_grid_area[0] < 0) {
-                        //     console.log("else if")
-                        //     snake_body[i].style.gridArea = `${cur_grid_area[0] - 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] - 1} / ${cur_grid_area[3]}`;    
-                        //     piece_dir[i] = 2;
-                        // } else {
-                            snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] - 1} / ${cur_grid_area[2]} / ${cur_grid_area[3] - 1}`;  
-                        }
-                        piece_dir[i] = 0;
-                        break;
-                    case 1:
-                        console.log("move right outer")
-                        // console.log(`piece_dir[i - 1]: ${piece_dir[i -1]}`)
-                        console.log(`piece_dir[i]: ${piece_dir[i]}`)
-                        if (piece_dir[i] == 2) {
-                            snake_body[i].style.gridArea = `${cur_grid_area[0] - 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] - 1} / ${cur_grid_area[3]}`;    
-                        } else if (piece_dir[i] == 3) {
-                            snake_body[i].style.gridArea = `${cur_grid_area[0] + 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] + 1} / ${cur_grid_area[3]}`;    
-                        } else {
-                            snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] + 1} / ${cur_grid_area[2]} / ${cur_grid_area[3] + 1}`;    
-                            piece_dir[i] = 1;
-                        }
-                        
-                        // if (old_grid_area[0] - cur_grid_area[0] > 0) {
-                        //     // snake_body[i].style.rowStart = cur_grid_area[0] - 1;
-                        //     snake_body[i].style.gridArea = `${cur_grid_area[0] + 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] + 1} / ${cur_grid_area[3]}`;    
-                        //     piece_dir[i] = 3;
-                        // } else if (old_grid_area[0] - cur_grid_area[0] < 0) {
-                        //     snake_body[i].style.gridArea = `${cur_grid_area[0] - 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] - 1} / ${cur_grid_area[3]}`;    
-                        //     piece_dir[i] = 2;
-                        // } else {
-                        //     snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] + 1} / ${cur_grid_area[2]} / ${cur_grid_area[3] + 1}`;
-                        //     piece_dir[i] = 1;
-                        // }
-                        break;
-                    case 2:
-                        if (old_grid_area[1] - cur_grid_area[1] > 0) {
-                            snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] + 1} / ${cur_grid_area[2]} / ${cur_grid_area[3] + 1}`;
-                            piece_dir[i] = 0
-                        } else if (old_grid_area[1] - cur_grid_area[1] < 0) {
-                            snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] - 1} / ${cur_grid_area[2]} / ${cur_grid_area[3] - 1}`;
-                            piece_dir[i] = 1
-                        } else {
-                            snake_body[i].style.gridArea = `${cur_grid_area[0] - 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] - 1} / ${cur_grid_area[3]}`;
-                            piece_dir[i] = 2;
-                        }
-                        break;
-                    case 3:
-                        if (old_grid_area[1] - cur_grid_area[1] > 0) {
-                            snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] + 1} / ${cur_grid_area[2]} / ${cur_grid_area[3] + 1}`;
-                            piece_dir[i] = 0
-                        } else if (old_grid_area[1] - cur_grid_area[1] < 0) {
-                            snake_body[i].style.gridArea = `${cur_grid_area[0]} / ${cur_grid_area[1] - 1} / ${cur_grid_area[2]} / ${cur_grid_area[3] - 1}`;
-                            piece_dir[i] = 1
-                        } else {
-                            snake_body[i].style.gridArea = `${cur_grid_area[0] + 1} / ${cur_grid_area[1]} / ${cur_grid_area[2] + 1} / ${cur_grid_area[3]}`;
-                            piece_dir[i] = 3;
-                        }
-                        break;
-                }
+                snake_body[i].style.gridArea = old_grid_areas[i - 1];
             }
-            console.log("\n")
-        }
+        }        
     }
 
 
@@ -208,14 +132,14 @@ document.addEventListener("DOMContentLoaded", function() {
         new_time = Date.now();
 
         if (play == true) {
-            if (new_time - move_last >= 565) {
+            if (new_time - move_last >= 500) {
                 move_snake();
 
                 move_last = Date.now();
             }
-            if (new_time - audio_last >= audio.duration) {
-                audio.play()
-            }
+            // if (new_time - audio_last >= audio.duration) {
+            //     audio.play()
+            // }
         }
 
         requestAnimationFrame(repeatOften);
@@ -233,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.querySelector(".start_button").addEventListener('click', () => {
         play = true;
-        audio.play();
+        // audio.play();
         start_button_container.style.display = "none";
     });
 
@@ -245,8 +169,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    let snake_top  = 250,
-    snake_left = (window.innerWidth / 4);
 
     let tasty_bit = document.createElement("div");
     tasty_bit.classList.add("tasty-bit");
@@ -257,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     function create_initial_snake() {
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 8; i++) {
             let snake_piece = document.createElement("div");
     
             if (i == 0) {
@@ -267,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function() {
             snake_piece.classList.add("snake-body");
             snake_piece.classList.add(i);
 
-            snake_piece.style.gridArea = `${5 - i} / 1 / ${6- i} / 2`;
+            snake_piece.style.gridArea = `${9 - i} / 1 / ${10- i} / 2`;
 
             let small_gap = 5;
             if (main_game.offsetHeight > main_game.offsetWidth) {
