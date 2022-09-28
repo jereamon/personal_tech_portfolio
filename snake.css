@@ -51,6 +51,7 @@ h2 {
 }
 
 svg {
+    height: 100%;
     max-height: 100%;
 }
 /*#endregion Generic */
@@ -71,6 +72,7 @@ svg {
 
 .start_button {
     background-color: var(--main-purple);
+    /* background-color: var(--main-orange); */
     border-radius: 15px;
     color: var(--main-white);
     font-size: 55px;

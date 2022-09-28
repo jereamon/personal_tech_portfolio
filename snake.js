@@ -233,7 +233,6 @@ document.addEventListener("DOMContentLoaded", function() {
     add_tasty_bit(rows_cols[0], rows_cols[1]);
 
 
-    // -------------------------------------------------------------------------
     function create_initial_snake() {
         let num_rows = 0;
 
