@@ -16,32 +16,26 @@ document.addEventListener("DOMContentLoaded", function() {
     // -------------------------------------------------------------------------
     //#region Event listeners for the game keypad
     let snake_dir   = 2,
+        move_time   = 175,
+        input_time  = 150;
     keypad_buts = document.querySelectorAll(".keypad-cls-1");
 
     for (let i = 0; i < keypad_buts.length; i++) {
         if (keypad_buts[i].classList.contains("left")) {
             keypad_buts[i].addEventListener('click', () => {
-                if (snake_dir != 1) {
-                    snake_dir = 0;
-                }
+                set_snake_dir(0);
             })
         } else if (keypad_buts[i].classList.contains("right")) {
             keypad_buts[i].addEventListener('click', () => {
-                if (snake_dir != 0) {
-                    snake_dir = 1;
-                }
+                set_snake_dir(1);
             })
         } else if (keypad_buts[i].classList.contains("up")) {
             keypad_buts[i].addEventListener('click', () => {
-                if (snake_dir != 3) {
-                    snake_dir = 2;
-                }
+                set_snake_dir(2);
             })
         } else if (keypad_buts[i].classList.contains("down")) {
             keypad_buts[i].addEventListener('click', () => {
-                if (snake_dir != 2) {
-                    snake_dir = 3;
-                }
+                set_snake_dir(3);
             })
         }
     }
@@ -50,25 +44,66 @@ document.addEventListener("DOMContentLoaded", function() {
     document.onkeydown = function(e) {
         switch (e.key) {
             case 'ArrowLeft':
-                if (snake_dir != 1) {
-                    snake_dir = 0;
-                }
+                set_snake_dir(0);
                 break;
             case 'ArrowRight':
-                if (snake_dir != 0) {
-                    snake_dir = 1;
-                }
+                set_snake_dir(1);
                 break;
             case 'ArrowUp':
-                if (snake_dir != 3) {
-                    snake_dir = 2;
-                }
+                set_snake_dir(2);
                 break;
             case 'ArrowDown':
-                if (snake_dir != 2) {
-                    snake_dir = 3;
+                set_snake_dir(3);
+                break;
+        }
+    }
+
+
+    let dir_change_old_time = Date.now(),
+        dir_change_new_time = Date.now();
+
+    function set_snake_dir(new_snake_dir) {
+        // This is called when either a keyboard arrow is pressed or
+        let dir_changed = false;
+
+        dir_change_new_time = Date.now();
+
+        if (dir_change_new_time - dir_change_old_time >= input_time) {
+        switch (new_snake_dir) {
+            case 0:
+                if (snake_dir != 1 && snake_dir != 0) {
+                    snake_dir = 0;
+                    // snake_dirs.push(0);
+                    dir_changed = true;
                 }
                 break;
+            case 1:
+                if (snake_dir != 0 && snake_dir != 1) {
+                    snake_dir = 1;
+                    // snake_dirs.push(1);
+                    dir_changed = true;
+                }
+                break;
+            case 2:
+                if (snake_dir != 3 && snake_dir != 2) {
+                    snake_dir = 2;
+                    // snake_dirs.push(2);
+                    dir_changed = true;
+                }
+                break;
+            case 3:
+                if (snake_dir != 2 && snake_dir != 3) {
+                    // snake_dirs.push(3);
+                    snake_dir = 3;
+                    dir_changed = true;
+                }
+                break;
+        }
+        if (dir_changed) {
+            determine_move_time();
+        }
+
+             dir_change_old_time = Date.now();
         }
     }
     //#endregion Event listeners for the game keypad
@@ -82,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
-    function move_snake(tasty_bit_row, tasty_bit_col) {
+    function move_snake() {
         let snake_body = document.querySelectorAll(".snake-body");
 
         // Ok we get the grid area value for the snake piece in 
@@ -90,6 +125,8 @@ document.addEventListener("DOMContentLoaded", function() {
         let head_grid_area = parse_grid_area(snake_body[0].style.gridArea),
             old_grid_areas = []
             head_moved = false;
+        let num_rows = get_num_rows();
+        console.log(`in move_snake. Num_rows: ${num_rows}`);
 
         // We populate this array here so that we have the old positions of each
         // snake segment before any are moved.
@@ -108,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 break;
             case 1:
                 // move snake head right if possible
-                if (head_grid_area[1] + 1 < 20) {
+                if (head_grid_area[1] + 1 <= rows_cols[1]) {
                     snake_body[0].style.gridArea = `${head_grid_area[0]} / ${head_grid_area[1] + 1} / ${head_grid_area[2]} / ${head_grid_area[3] + 1}`;
                     head_moved = true;
                 }
@@ -121,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
                 break;
             case 3:
-                if (head_grid_area[0] + 1 < 20) {
+                if (head_grid_area[0] + 1 <= rows_cols[0]) {
                     snake_body[0].style.gridArea = `${head_grid_area[0] + 1} / ${head_grid_area[1]} / ${head_grid_area[2] + 1} / ${head_grid_area[3]}`;
                     head_moved = true;
                 }
@@ -143,14 +180,70 @@ document.addEventListener("DOMContentLoaded", function() {
                 add_snake_piece(parse_grid_area(old_grid_areas.at(-1))[0], parse_grid_area(old_grid_areas.at(-1))[1]);
                 remove_tasty_bit();
                 add_tasty_bit();
+
+                let box_shadow_div = document.querySelector('.fading-box-shadow');
+                box_shadow_div.style.opacity = 1;
+                setTimeout(() => {
+                    box_shadow_div.style.opacity = 0;
+                }, 100);
             }
 
             for (let i = 1; i < snake_body.length; i++) {
                 snake_body[i].style.gridArea = old_grid_areas[i - 1];
             }
+
+            check_game_over();
         }        
     }
 
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    function check_game_over() {
+        // Checks if the snakes head is in the same position as one of it's body
+        // pieces.
+        let snake_body = document.querySelectorAll(".snake-body");
+        let head_grid_area = parse_grid_area(snake_body[0].style.gridArea);
+
+        for (let i = 1; i < snake_body.length; i++) {
+            let cur_snake_grid = parse_grid_area(snake_body[i].style.gridArea);
+
+            if ((head_grid_area[0] == cur_snake_grid[0]) && (head_grid_area[1] == cur_snake_grid[1])) {
+                let game_over_container = document.querySelector(".game_over_container");
+                let score = document.querySelector(".score");
+                let game_over_score = document.querySelector(".game_over_score");
+
+                play = false;
+                audio.pause();
+                start_button_container.style.display = "none";
+                game_over_score.innerHTML = score.innerHTML;
+                
+                game_over_container.style.display = "flex";
+                setTimeout(function() {
+                    game_over_container.style.opacity = 1;
+                }, 50);
+            }
+        }
+    }
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
+    function determine_move_time() {
+        new_time = Date.now();
+
+        if (play == true) {
+            // if (new_time - move_last >= 1500) {
+            // if (new_time - move_last >= 260) {
+            if (new_time - move_last >= move_time) {
+                move_snake();
+                move_last = Date.now();
+            }
+            // if (new_time - audio_last >= audio.duration) {
+            //     audio.play()
+            // }
+        }
+    }
 
 
     // -------------------------------------------------------------------------
@@ -162,37 +255,13 @@ document.addEventListener("DOMContentLoaded", function() {
         // audio      = new Audio('drums_trimmed.wav'),
         audio      = new Audio('ToxicAvenger_cut.mp3'),
         play       = false,
-        // play       = true,
+        dir_change = false,
         start_button_container = document.querySelector(".start_button_container");
     let box_shadow_div = document.querySelector(".fading-box-shadow");
 
 
     function repeatOften(time) {
-        new_time = Date.now();
-
-        if (play == true) {
-            // if (new_time - move_last >= 1500) {
-            // if (new_time - move_last >= 260) {
-            if (new_time - move_last >= 130) {
-                move_snake();
-
-                move_last = Date.now();
-            }
-            // if (new_time - audio_last >= audio.duration) {
-            //     audio.play()
-            // }
-
-            if (new_time - main_box_shadow_time >= 270) {
-                if (box_shadow_div.style.opacity == 1) {
-                    box_shadow_div.style.opacity = 0;
-                } else {
-                    box_shadow_div.style.opacity = 1;
-                }
-
-                main_box_shadow_time = Date.now();
-            } 
-
-        }
+        determine_move_time();
 
         requestAnimationFrame(repeatOften);
     }
@@ -234,7 +303,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     function create_initial_snake() {
-        let num_rows = 0;
+        let num_rows = 0,
+            num_cols = 0;
 
         for (let i = 0; i < 4; i++) {
             let snake_piece = document.createElement("div");
@@ -252,21 +322,36 @@ document.addEventListener("DOMContentLoaded", function() {
             
             if (main_game.offsetHeight > main_game.offsetWidth) {
                 num_rows = get_num_rows();
+                num_cols = 20;
+                console.log(`in create_initial_game. num_rows: ${num_rows}, num_cols: ${num_cols}`);
 
-                let row_height = Math.floor(main_game.offsetHeight / num_rows),
-                    row_height_min_gap = row_height - 5,
-                    col_width = (main_game.offsetWidth - 10) / 20,
-                    col_width_min_gap = col_width - 5;
+                let row_height             = Math.floor(main_game.offsetHeight / num_rows),
+                    row_height_minus_gap   = row_height - 5,
+                    col_width              = (main_game.offsetWidth - 10) / 20,
+                    col_width_minus_gap    = col_width - 5;
 
-                main_game.style.gridTemplateColumns = `repeat(20, ${col_width_min_gap}px)`;
+                main_game.style.gridTemplateColumns = `repeat(${num_cols}, ${col_width_minus_gap}px)`;
                 
-                main_game.style.gridTemplateRows = `repeat(${num_rows}, ${row_height_min_gap}px)`;
+                main_game.style.gridTemplateRows = `repeat(${num_rows}, ${row_height_minus_gap}px)`;
+            } else {
+                num_cols = get_num_cols();
+                num_rows = 20;
+
+                console.log(`in create_initial_game. num_rows: ${num_rows}, num_cols: ${num_cols}`);
+
+                let col_width            = Math.floor(main_game.offsetWidth / num_cols),
+                    col_width_minus_gap  = col_width - 5,
+                    row_height           = Math.floor((main_game.offsetHeight - 10) / 2),
+                    row_height_minus_gap = row_height - 5;
+
+                main_game.style.gridTemplateColumns = `repeat(${num_cols}, ${col_width_minus_gap})`;
+                main_game.style.gridTemplateRows    = `repeat(${num_rows}, ${row_height_minus_gap})`;
             }
     
             main_game.appendChild(snake_piece);
         }
 
-        return [num_rows, 20];
+        return [num_rows, num_cols];
     }
     // -------------------------------------------------------------------------
 
@@ -276,6 +361,11 @@ document.addEventListener("DOMContentLoaded", function() {
         // console.log("In get_num_rows:");
         // console.log(`num rows: ${Math.floor(((main_game.offsetHeight - 10) / (main_game.offsetWidth - 10) * 20))}`); 
         return Math.floor(((main_game.offsetHeight - 10) / (main_game.offsetWidth - 10) * 20))
+    }
+
+    function get_num_cols() {
+        let main_game = document.querySelector(".main-game");
+        return Math.floor(((main_game.offsetWidth - 10) / (main_game.offsetHeight - 10) * 20))
     }
 
     function add_snake_piece(row, col) {
