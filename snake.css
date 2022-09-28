@@ -154,17 +154,15 @@ svg {
 /*#region Bottom Bar  */
 .bottom-bar {
     align-items: center;
-    /* border-top: solid 1px var(--main-white); */
     display: flex;
     /* background-color: white; */
     justify-content: space-between;
-    /* height: 150px; */
     height: 25vh;
     padding: 1vh 15px;
 }
 
 
-.pause, .restart {
+.pause, .restart, object {
     max-height: 40%;
 }
 /*#endregion Bottom Bar  */
