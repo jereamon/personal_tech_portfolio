@@ -2,27 +2,22 @@
   <defs>
     <style>
       .pause-cls-1 {
-        fill: #33333e;
-      }
-
-      .pause-cls-2 {
         fill: #321e3e;
       }
 
-      .pause-cls-2, .pause-cls-3 {
+      .pause-cls-1, .pause-cls-2 {
         stroke: #ddd;
         stroke-miterlimit: 10;
         stroke-width: 5px;
       }
 
-      .pause-cls-3 {
+      .pause-cls-2 {
         fill: none;
         stroke-linecap: round;
       }
     </style>
   </defs>
-  <rect class="pause-cls-1" width="500" height="500"/>
-  <rect class="pause-cls-2" x="50" y="50" width="400" height="400" rx="50"/>
-  <line class="pause-cls-3" x1="175" y1="100" x2="175" y2="400"/>
-  <line class="pause-cls-3" x1="325" y1="100" x2="325" y2="400"/>
+  <rect class="pause-cls-1" x="4" y="4" width="492" height="492" rx="50"/>
+  <line class="pause-cls-2" x1="157.75" y1="65.5" x2="157.75" y2="434.5"/>
+  <line class="pause-cls-2" x1="342.25" y1="65.5" x2="342.25" y2="434.5"/>
 </svg>

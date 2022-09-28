@@ -26,7 +26,7 @@
 }
 
 * {
-    background-color: var(--main-grey);
+    /* background-color: var(--main-grey);s */
     box-sizing: border-box;
     color: var(--main-white);
     font-family: var(--sans-font);
@@ -37,6 +37,7 @@
 }
 
 body {
+    background-color: var(--main-grey);
     height: 100%;
 }
 
@@ -50,7 +51,7 @@ h2 {
 }
 
 svg {
-    max-height: 18vh;
+    max-height: 100%;
 }
 /*#endregion Generic */
 
@@ -59,7 +60,7 @@ svg {
     align-items: center;
     background-color: var(--main-grey-medium-opacity);
     display: flex;
-    /* display: none; */
+    /* display: none;  */
     justify-content: center;
     height: 100%;
     left: 0;
@@ -102,7 +103,8 @@ svg {
 .main-game {
     align-items: center;
     background-color: var(--main-purple);
-    border: solid 1px white;
+    /* box-shadow: inset 0px 5px 1px rgba(250,250,250.1); */
+    /* border: solid 1px white; */
     display: grid;
     grid-gap: 5px;
     grid-template-columns: repeat(20, auto);
@@ -110,6 +112,16 @@ svg {
     justify-items: center;
     height: 100%;
     padding: 5px;
+    position: relative;
+}
+
+.fading-box-shadow {
+    box-shadow: inset 0px 5px 15px var(--main-orange);
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    transition: opacity 270ms;
+    width: 100%;
 }
 
 .snake-head, .snake-body {
@@ -119,6 +131,7 @@ svg {
     /* position: fixed; */
     /* width: 15px; */
     width: 100%;
+    /* transition: opacity 235ms; */
 }
 
 .snake-head.snake-body {
@@ -143,16 +156,15 @@ svg {
     align-items: center;
     /* border-top: solid 1px var(--main-white); */
     display: flex;
+    /* background-color: white; */
     justify-content: space-between;
-    height: 150px;
-    padding: 0 15px;
+    /* height: 150px; */
+    height: 25vh;
+    padding: 1vh 15px;
 }
 
-.keypad {
-    max-height: 130px;
-}
 
 .pause, .restart {
-    max-height: 65px;
+    max-height: 40%;
 }
 /*#endregion Bottom Bar  */

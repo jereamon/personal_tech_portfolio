@@ -2,36 +2,31 @@
   <defs>
     <style>
       .restart-cls-1 {
-        fill: #33333e;
-      }
-
-      .restart-cls-2 {
         fill: #321e3e;
       }
 
-      .restart-cls-2, .restart-cls-3, .restart-cls-4, .restart-cls-5 {
+      .restart-cls-1, .restart-cls-2, .restart-cls-3, .restart-cls-4 {
         stroke: #ddd;
         stroke-miterlimit: 10;
       }
 
-      .restart-cls-2, .restart-cls-3, .restart-cls-5 {
+      .restart-cls-1, .restart-cls-2, .restart-cls-4 {
         stroke-width: 5px;
       }
 
-      .restart-cls-3, .restart-cls-4, .restart-cls-5 {
+      .restart-cls-2, .restart-cls-3, .restart-cls-4 {
         fill: none;
       }
 
-      .restart-cls-3 {
+      .restart-cls-2 {
         stroke-linecap: round;
       }
     </style>
   </defs>
   <g id="Layer_2" data-name="Layer 2">
-    <rect class="restart-cls-1" width="500" height="500"/>
-    <rect class="restart-cls-2" x="50" y="50" width="400" height="400" rx="50"/>
-    <path class="restart-cls-3" d="M120,175.13h0A150,150,0,1,1,167.07,375"/>
-    <line class="restart-cls-4" x1="120" y1="175.13" x2="120" y2="175.12"/>
-    <path class="restart-cls-5" d="M82.31,183.19,108,238.32a7.43,7.43,0,0,0,12.83,1.12l34.9-49.82a7.44,7.44,0,0,0-5.45-11.68l-60.6-5.31A7.45,7.45,0,0,0,82.31,183.19Z"/>
+    <rect class="restart-cls-1" x="4" y="4" width="492" height="492" rx="50"/>
+    <path class="restart-cls-2" d="M90.1,157.91h0A184.43,184.43,0,0,1,250,65.5c101.89,0,184.5,82.61,184.5,184.5S351.89,434.5,250,434.5a183.56,183.56,0,0,1-102-30.75"/>
+    <line class="restart-cls-3" x1="90.1" y1="157.91" x2="90.1" y2="157.9"/>
+    <path class="restart-cls-4" d="M42.49,165.14l34.12,73.18a7.44,7.44,0,0,0,12.84,1.12l46.32-66.14a7.44,7.44,0,0,0-5.45-11.68l-80.44-7A7.44,7.44,0,0,0,42.49,165.14Z"/>
   </g>
 </svg>
