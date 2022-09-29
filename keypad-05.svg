@@ -1,0 +1,23 @@
+<svg class="keypad" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <defs>
+    <style>
+      .keypad-cls-1 {
+        fill: #03888c;
+        stroke: #ddd;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 5px;
+      }
+    </style>
+  </defs>
+  <g id="Layer_4" data-name="Layer 4">
+    <path id="Right" class="keypad-cls-1 right" d="M500,250a199.33,199.33,0,0,1-58.58,141.42L299.5,249.5,440.57,107.73A199.39,199.39,0,0,1,500,250Z"/>
+    <path id="Left" class="keypad-cls-1 left" d="M199.5,249.5,58.43,391.28a200,200,0,0,1,.15-282.7Z"/>
+    <path id="Down" class="keypad-cls-1 down" d="M391.42,441.42a200,200,0,0,1-283-.14L249.5,299.5Z"/>
+    <path id="Up" class="keypad-cls-1 up" d="M390.57,57.73,249.5,199.5,108.58,58.58a200,200,0,0,1,282-.85Z"/>
+    <path class="keypad-cls-1 down" d="M258.33,464.62l39-67.5a5,5,0,0,0-4.33-7.5H215a5,5,0,0,0-4.33,7.5l39,67.5A5,5,0,0,0,258.33,464.62Z"/>
+    <path class="keypad-cls-1 left" d="M106.25,206.07l-67.5,39a5,5,0,0,0,0,8.66l67.5,39a5,5,0,0,0,7.5-4.33V210.4A5,5,0,0,0,106.25,206.07Z"/>
+    <path class="keypad-cls-1 right" d="M394.25,210.4v77.94a5,5,0,0,0,7.5,4.33l67.5-39a5,5,0,0,0,0-8.66l-67.5-39A5,5,0,0,0,394.25,210.4Z"/>
+    <path class="keypad-cls-1 up" d="M249.67,34.12l-39,67.5a5,5,0,0,0,4.33,7.5H293a5,5,0,0,0,4.33-7.5l-39-67.5A5,5,0,0,0,249.67,34.12Z"/>
+  </g>
+</svg>

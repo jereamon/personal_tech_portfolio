@@ -1,32 +1,10 @@
-<svg class="volume" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 500">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 500">
   <defs>
     <style>
-      .volume-cls-1, .volume-cls-2, .volume-cls-3, .volume-cls-4 {
+      .cls-1 {
         fill: none;
-        stroke-miterlimit: 10;
-      }
-
-      .volume-cls-1, .volume-cls-4 {
         stroke: #03888c;
-      }
-
-      .volume-cls-1 {
-        stroke-width: 30px;
-      }
-
-      .volume-cls-2, .volume-cls-3 {
-        stroke: #ddd;
-      }
-
-      .volume-cls-2 {
-        stroke-width: 32px;
-      }
-
-      .volume-cls-3 {
-        stroke-width: 33px;
-      }
-
-      .volume-cls-4 {
+        stroke-miterlimit: 10;
         stroke-linecap: round;
         stroke-width: 40px;
       }
@@ -34,16 +12,13 @@
   </defs>
   <g id="Layer_2" data-name="Layer 2">
     <g>
-      <path class="volume-cls-1" d="M162.35,317.34v37.17H40.15a22.72,22.72,0,0,1-22.71-22.72V170.21a22.72,22.72,0,0,1,22.71-22.72h122.2V317.34Z"/>
-      <path class="volume-cls-1" d="M162.35,321.89V147.49L348.81,14.3a4.27,4.27,0,0,1,6.75,3.48V484.22a4.27,4.27,0,0,1-6.75,3.48L162.35,354.51V317.34"/>
-      <line class="volume-cls-2" x1="162.35" y1="279.36" x2="162.35" y2="219.9"/>
-      <line class="volume-cls-3" x1="162.35" y1="338.03" x2="162.35" y2="314.21"/>
-      <line class="volume-cls-2" x1="355.56" y1="94.67" x2="355.56" y2="57.96"/>
+      <path class="cls-1" d="M162.35,317.34v37.17H40.15a22.72,22.72,0,0,1-22.71-22.72V170.21a22.72,22.72,0,0,1,22.71-22.72h122.2V317.34Z"/>
+      <path class="cls-1" d="M162.35,321.89V147.49L348.81,14.3a4.27,4.27,0,0,1,6.75,3.48V484.22a4.27,4.27,0,0,1-6.75,3.48L162.35,354.51V317.34"/>
     </g>
     <g>
-      <path class="volume-cls-4" d="M556.62,56.15a312.54,312.54,0,0,1,0,387.7"/>
-      <path class="volume-cls-4" d="M499.58,393.81a234.4,234.4,0,0,0,0-287.62"/>
-      <path class="volume-cls-4" d="M439.5,343.75a156.25,156.25,0,0,0,0-187.5"/>
+      <path class="cls-1" d="M556.62,56.15a312.54,312.54,0,0,1,0,387.7"/>
+      <path class="cls-1" d="M499.58,393.81a234.4,234.4,0,0,0,0-287.62"/>
+      <path class="cls-1" d="M439.5,343.75a156.25,156.25,0,0,0,0-187.5"/>
     </g>
   </g>
 </svg>
