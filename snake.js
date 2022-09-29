@@ -2,14 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let main_game = document.querySelector(".main-game");
 
     // It's minus 225 because the top bar is 75px tall and bottom bar is 150px tall
-    main_game.style.height = (window.innerHeight - (100 + (window.innerHeight * .25))).toString() + "px";
-
-    // Function defined at bottom
-    // Called at top so that the snake is in place when I populate the snake
-    // direction array.
-    let rows_cols = [create_initial_snake()];
-    rows_cols = rows_cols.toString().split(",")
-    
+    main_game.style.height = (window.innerHeight - (100 + (window.innerHeight * .25))).toString() + "px"; 
 
     
 
@@ -17,8 +10,18 @@ document.addEventListener("DOMContentLoaded", function() {
     //#region Event listeners for the game keypad
     let snake_dir   = 2,
         move_time   = 175,
-        input_time  = 150;
+        input_time  = 150,
+        initial_snake_length = 6;
     keypad_buts = document.querySelectorAll(".keypad-cls-1");
+
+
+    // Function defined at bottom
+    // Called at top so that the snake is in place when I populate the snake
+    // direction array.
+    let rows_cols = [create_initial_snake()];
+    rows_cols = rows_cols.toString().split(",")
+
+
 
     for (let i = 0; i < keypad_buts.length; i++) {
         if (keypad_buts[i].classList.contains("left")) {
@@ -126,7 +129,6 @@ document.addEventListener("DOMContentLoaded", function() {
             old_grid_areas = []
             head_moved = false;
         let num_rows = get_num_rows();
-        console.log(`in move_snake. Num_rows: ${num_rows}`);
 
         // We populate this array here so that we have the old positions of each
         // snake segment before any are moved.
@@ -181,11 +183,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 remove_tasty_bit();
                 add_tasty_bit();
 
-                let box_shadow_div = document.querySelector('.fading-box-shadow');
-                box_shadow_div.style.opacity = 1;
-                setTimeout(() => {
-                    box_shadow_div.style.opacity = 0;
-                }, 100);
+                fade_box_shadow('blue');
+                
             }
 
             for (let i = 1; i < snake_body.length; i++) {
@@ -229,21 +228,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // -------------------------------------------------------------------------
 
 
-    function determine_move_time() {
-        new_time = Date.now();
-
-        if (play == true) {
-            // if (new_time - move_last >= 1500) {
-            // if (new_time - move_last >= 260) {
-            if (new_time - move_last >= move_time) {
-                move_snake();
-                move_last = Date.now();
-            }
-            // if (new_time - audio_last >= audio.duration) {
-            //     audio.play()
-            // }
-        }
-    }
+    
 
 
     // -------------------------------------------------------------------------
@@ -258,6 +243,45 @@ document.addEventListener("DOMContentLoaded", function() {
         dir_change = false,
         start_button_container = document.querySelector(".start_button_container");
     let box_shadow_div = document.querySelector(".fading-box-shadow");
+
+
+    function fade_box_shadow(color) {
+        let box_shadow_div = document.querySelector(`.fading-box-shadow.${color}`);
+        box_shadow_div.style.opacity = 1;
+        setTimeout(() => {
+            box_shadow_div.style.opacity = 0;
+        }, 555);
+    }
+
+
+    let timer = false;
+    function determine_move_time() {
+        new_time = Date.now();
+
+        if (play == true) {
+            // if (new_time - move_last >= 1500) {
+            // if (new_time - move_last >= 260) {
+            if (new_time - move_last >= move_time) {
+                move_snake();
+                move_last = Date.now();
+            }
+            // if (new_time - audio_last >= audio.duration) {
+            //     audio.play()
+            // }
+
+
+            if (new_time - audio_last >= 17989 && new_time - audio_last <= 35582 && play) {
+                if (!timer) {
+                    console.log(`timer == ${timer}`)
+                    timer = setInterval(() => {fade_box_shadow('orange')}, 1111);
+                }
+            } else if (timer) {
+                console.log("clearing timer")
+                clearInterval(timer);
+                timer = false;
+            }
+        }
+    }
 
 
     function repeatOften(time) {
@@ -306,7 +330,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let num_rows = 0,
             num_cols = 0;
 
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < initial_snake_length; i++) {
             let snake_piece = document.createElement("div");
     
             if (i == 0) {
@@ -323,7 +347,6 @@ document.addEventListener("DOMContentLoaded", function() {
             if (main_game.offsetHeight > main_game.offsetWidth) {
                 num_rows = get_num_rows();
                 num_cols = 20;
-                console.log(`in create_initial_game. num_rows: ${num_rows}, num_cols: ${num_cols}`);
 
                 let row_height             = Math.floor(main_game.offsetHeight / num_rows),
                     row_height_minus_gap   = row_height - 5,
@@ -336,8 +359,6 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 num_cols = get_num_cols();
                 num_rows = 20;
-
-                console.log(`in create_initial_game. num_rows: ${num_rows}, num_cols: ${num_cols}`);
 
                 let col_width            = Math.floor(main_game.offsetWidth / num_cols),
                     col_width_minus_gap  = col_width - 5,
