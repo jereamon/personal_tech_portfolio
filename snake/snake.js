@@ -390,8 +390,9 @@ document.addEventListener("DOMContentLoaded", function() {
     //#region Game initialization
     // -------------------------------------------------------------------------
     function create_initial_snake() {
-        let num_rows = 0,
-            num_cols = 0;
+        let rows_cols = set_game_dimensions();
+        let num_rows = rows_cols[0],
+            num_cols = rows_cols[1]
 
         snake_dir = 2;
 
@@ -407,37 +408,51 @@ document.addEventListener("DOMContentLoaded", function() {
 
             snake_piece.style.gridArea = `${15 + i} / 9 / ${16 + i} / 10`;
 
-            let main_game = document.querySelector(".main-game");
-            
-            if (main_game.offsetHeight > main_game.offsetWidth) {
-                num_rows = get_num_rows();
-                num_cols = 20;
-
-                let row_height             = Math.floor(main_game.offsetHeight / num_rows),
-                    row_height_minus_gap   = row_height - 5,
-                    col_width              = (main_game.offsetWidth - 10) / 20,
-                    col_width_minus_gap    = col_width - 5;
-
-                main_game.style.gridTemplateColumns = `repeat(${num_cols}, ${col_width_minus_gap}px)`;
-                
-                main_game.style.gridTemplateRows = `repeat(${num_rows}, ${row_height_minus_gap}px)`;
-            } else {
-                num_cols = get_num_cols();
-                num_rows = 20;
-
-                let col_width            = Math.floor(main_game.offsetWidth / num_cols),
-                    col_width_minus_gap  = col_width - 5,
-                    row_height           = Math.floor((main_game.offsetHeight - 10) / 2),
-                    row_height_minus_gap = row_height - 5;
-
-                main_game.style.gridTemplateColumns = `repeat(${num_cols}, ${col_width_minus_gap})`;
-                main_game.style.gridTemplateRows    = `repeat(${num_rows}, ${row_height_minus_gap})`;
-            }
+            let main_game = document.querySelector(".main-game");            
     
             main_game.appendChild(snake_piece);
         }
 
         add_tasty_bit(num_rows, num_cols);
+
+        return [num_rows, num_cols];
+    }
+
+
+    function set_game_dimensions() {
+        let main_game = document.querySelector(".main-game");
+        let num_rows = 0,
+            num_cols = 0;
+
+        if (main_game.offsetHeight > main_game.offsetWidth) {
+            console.log("phone screen")
+
+            num_rows = get_num_rows();
+            num_cols = 20;
+
+            let row_height             = Math.floor(main_game.offsetHeight / num_rows),
+                row_height_minus_gap   = row_height - 5,
+                col_width              = (main_game.offsetWidth - 10) / 20,
+                col_width_minus_gap    = col_width - 5;
+
+            main_game.style.gridTemplateColumns = `repeat(${num_cols}, ${col_width_minus_gap}px)`;
+            
+            main_game.style.gridTemplateRows = `repeat(${num_rows}, ${row_height_minus_gap}px)`;
+        } else {
+            console.log("desktop screen");
+            main_game.style.width = main_game.offsetHeight + "px";
+
+            num_cols = get_num_cols();
+            num_rows = 20;
+
+            let col_width            = Math.floor(main_game.offsetWidth / num_cols),
+                col_width_minus_gap  = col_width - 5,
+                row_height           = Math.floor((main_game.offsetHeight - 10) / 2),
+                row_height_minus_gap = row_height - 5;
+
+            main_game.style.gridTemplateColumns = `repeat(${num_cols}, ${col_width_minus_gap})`;
+            main_game.style.gridTemplateRows    = `repeat(${num_rows}, ${row_height_minus_gap})`;
+        }
 
         return [num_rows, num_cols];
     }
@@ -470,25 +485,43 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function add_tasty_bit() {
+        let snake_body = document.querySelectorAll(".snake-body");
         let num_rows = get_num_rows();
         let num_cols = 20;
         
         let tasty_bit_row = Math.floor(Math.random() * (num_rows - 2) + 2);
         let tasty_bit_col = Math.floor(Math.random() * (num_cols - 2) + 2);
         
+        let under_snake = false;
 
-        switch (tasty_bit_row) {
-            case 15:
-            case 16:
-            case 17:
-            case 18:
-                switch (tasty_bit_col) {
-                    case 9:
-                        tasty_bit_col += 1;
-                        break;
+        while (true) {
+            for (let i = 0; i < snake_body.length; i++) {
+                let snake_piece_grid = parse_grid_area(snake_body[i].style.gridArea);
+                if (snake_piece_grid[0] == tasty_bit_row && snake_piece_grid[1] == tasty_bit_col) {
+                    under_snake = true;
                 }
-            break;
+            }
+
+            if (under_snake) {
+                tasty_bit_row = Math.floor(Math.random() * (num_rows - 2) + 2);
+                tasty_bit_col = Math.floor(Math.random() * (num_cols - 2) + 2);
+                under_snake = false;
+            } else {
+                break;
+            }
         }
+        // switch (tasty_bit_row) {
+        //     case 15:
+        //     case 16:
+        //     case 17:
+        //     case 18:
+        //         switch (tasty_bit_col) {
+        //             case 9:
+        //                 tasty_bit_col += 1;
+        //                 break;
+        //         }
+        //     break;
+        // }
 
         let tasty_bit = document.createElement("div");
         tasty_bit.classList.add("tasty-bit");
@@ -501,6 +534,10 @@ document.addEventListener("DOMContentLoaded", function() {
         let tasty_bit = document.querySelector(".tasty-bit");
         tasty_bit.remove();
     }
+
+
+
+    set_game_dimensions();
     //#endregion
     // -------------------------------------------------------------------------
 });

@@ -17,12 +17,12 @@
 /*#region Generic */
 @font-face {
     font-family: 'Lato';
-    src: url('./Fonts/Lato/Lato-Regular.ttf') format("truetype");
+    src: url('../Fonts/Lato/Lato-Regular.ttf') format("truetype");
 }
   
   @font-face {
     font-family: "Merriweather";
-    src: url("./Fonts/Merriweather/Merriweather-Regular.ttf") format("truetype");
+    src: url("../Fonts/Merriweather/Merriweather-Regular.ttf") format("truetype");
 }
 
 * {
@@ -37,7 +37,10 @@
 }
 
 body {
+    align-items: center;
     background-color: var(--main-grey);
+    display: flex;
+    flex-direction: column;
     height: 100%;
 }
 
@@ -57,6 +60,10 @@ h2 {
 svg {
     height: 100%;
     max-height: 100%;
+}
+
+.top-bar, .bottom-bar {
+    width: 100%;
 }
 /*#endregion Generic */
 
@@ -122,6 +129,7 @@ svg {
     height: 100%;
     padding: 5px;
     position: relative;
+    width: 100%;
 }
 
 .fading-box-shadow {  
@@ -212,4 +220,11 @@ svg {
 
 .game-over-container div h2 {
     padding: 25px 0;
+}
+
+
+@media (min-width: 768px) {
+    .top-bar, .bottom-bar {
+        max-width: 650px;
+    }
 }
