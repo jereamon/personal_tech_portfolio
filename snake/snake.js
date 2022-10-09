@@ -331,18 +331,22 @@ document.addEventListener("DOMContentLoaded", function() {
     // -------------------------------------------------------------------------
     //#region Play, pause, restart
     function restart_game() {
-        let game_over_container    = document.querySelector(".game-over-container"),
-            start_button_container = document.querySelector(".start-button-container"),
+        let game_over_container       = document.querySelector(".game-over-container"),
+            restart_confirm_container = document.querySelector(".restart-confirm"),
+            start_button_container    = document.querySelector(".start-button-container"),
             score = document.querySelector(".score");
 
         score.innerHTML = 0;
         game_over_container.style.opacity = 0;
+        restart_confirm_container.style.opacity = 0;
         start_button_container.style.opacity = 0;
 
         clear_snake();
 
         setTimeout(() => {
             game_over_container.style.display = 'none';
+            restart_confirm_container.style.display = "none";
+
             start_button_container.style.display = 'flex';
 
             setTimeout(() => {
@@ -352,6 +356,19 @@ document.addEventListener("DOMContentLoaded", function() {
             create_initial_snake();
             audio.currentTime = 0;
         }, 200)
+    }
+
+
+    function restart_confirm() {
+        let restart_confirm_container = document.querySelector(".restart-confirm");
+
+        play = false;
+        audio.pause();
+
+        restart_confirm_container.style.display = "flex";
+        setTimeout(() => {
+            restart_confirm_container.style.opacity = 1;
+        }, 10);
     }
 
 
@@ -365,15 +382,26 @@ document.addEventListener("DOMContentLoaded", function() {
         tasty_bit.remove();
     }
 
-    document.querySelector(".restart-button").addEventListener('click', () => {restart_game()});
 
-    document.querySelector(".start-button").addEventListener('click', () => {
+    function start_game() {
+        let restart_confirm_container = document.querySelector(".restart-confirm");
+
         play = true;
         if (audio_play) {
             audio.play();
         }
+
         start_button_container.style.display = "none";
-    });
+        restart_confirm_container.style.display = "none";
+    }
+
+
+    document.querySelector(".game-over-container .restart-button").addEventListener('click', () => {restart_game()});
+    document.querySelector(".restart-confirm .restart-button").addEventListener('click', () => {restart_game()});
+    document.querySelector(".restart").addEventListener("click", () => {restart_confirm()});
+
+    document.querySelector(".start-button-container .start-button").addEventListener('click', () => {start_game()});
+    document.querySelector(".restart-confirm .start-button").addEventListener('click', () => {start_game()});
 
     document.querySelector(".pause").addEventListener('click', () => {
         play = false;
@@ -425,7 +453,6 @@ document.addEventListener("DOMContentLoaded", function() {
             num_cols = 0;
 
         if (main_game.offsetHeight > main_game.offsetWidth) {
-            console.log("phone screen")
 
             num_rows = get_num_rows();
             num_cols = 20;
@@ -439,7 +466,6 @@ document.addEventListener("DOMContentLoaded", function() {
             
             main_game.style.gridTemplateRows = `repeat(${num_rows}, ${row_height_minus_gap}px)`;
         } else {
-            console.log("desktop screen");
             main_game.style.width = main_game.offsetHeight + "px";
 
             num_cols = get_num_cols();

@@ -195,7 +195,7 @@ svg {
 
 
 
-.game-over-container {
+.game-over-container, .restart-confirm {
     background-color: var(--main-orange-low-opacity);
     align-items: center;
     display: none;
