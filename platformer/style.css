@@ -1,0 +1,10 @@
+* {
+    /* border: none; */
+    box-sizing: border-box;
+    color: var(--main-white);
+    font-family: var(--sans-font);
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+    z-index: 5;
+  }
